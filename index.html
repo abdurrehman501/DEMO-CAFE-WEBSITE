@@ -1,0 +1,3217 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAISON ÉLAN — Specialty Coffee & Viennoiserie</title>
+  <meta
+    name="description"
+    content="Where Every Moment Brews Something Beautiful. Thoughtfully crafted coffee, beautiful flavours and little moments worth slowing down for."
+  />
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Deferred Non-Blocking Scripts (Never block HTML parsing or initial reveal) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --ivory: #F7F2E9;
+      --cream: #EDE3D5;
+      --espresso: #35251E;
+      --coffee: #6C4936;
+      --gold: #B89B70;
+      --charcoal: #25211E;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--ivory);
+      color: var(--charcoal);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
+    }
+
+    #coffee-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #f5f0e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#coffee-loader.hide-loader {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.coffee-loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coffee-cup {
+    width: 110px;
+    height: 85px;
+    border: 4px solid #6b4935;
+    border-radius: 8px 8px 28px 28px;
+    position: relative;
+    overflow: hidden;
+    background: #e8dfd1;
+    box-shadow: 0 15px 35px rgba(66, 43, 28, 0.12);
+}
+
+.coffee-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        #9b6947,
+        #54301d,
+        #2b170e
+    );
+    transform: scaleY(0);
+    transform-origin: bottom;
+    animation: coffeeFilling 3s ease-in-out forwards;
+}
+
+.coffee-surface {
+    position: absolute;
+    width: 100%;
+    height: 9px;
+    background: #c18b5b;
+    border-radius: 50%;
+    top: 0;
+    opacity: 0;
+    animation: coffeeSurface 3s ease-in-out forwards;
+}
+
+.coffee-handle {
+    width: 35px;
+    height: 45px;
+    border: 5px solid #6b4935;
+    border-left: none;
+    border-radius: 0 22px 22px 0;
+    position: absolute;
+    margin-left: 136px;
+    margin-top: 4px;
+}
+
+.coffee-loader-brand {
+    margin-top: 35px;
+    font-family: serif;
+    font-size: 23px;
+    letter-spacing: 5px;
+    color: #513a2b;
+}
+
+.coffee-loader-text {
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9a8775;
+}
+
+.coffee-loader-line {
+    width: 120px;
+    height: 2px;
+    background: #ded3c5;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.coffee-loader-progress {
+    height: 100%;
+    width: 0%;
+    background: #745039;
+    animation: loaderProgress 3.5s linear forwards;
+}
+
+@keyframes coffeeFilling {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes coffeeSurface {
+    0%, 10% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes loaderProgress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+    .font-serif-editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    ::selection {
+      background-color: rgba(184, 155, 112, 0.3);
+      color: var(--espresso);
+    }
+
+    /* GPU-Composited Scroll Reveal */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
+
+    /* Offscreen Rendering Optimization */
+    .perf-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 820px;
+    }
+
+    /* 3D Tilt Card & Glare (GPU-composited) */
+    .tilt-card {
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    .tilt-glare {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    /* Smooth GPU Image Zoom */
+    .card-img-zoom {
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      backface-visibility: hidden;
+    }
+    .group:hover .card-img-zoom {
+      transform: scale3d(1.06, 1.06, 1);
+    }
+
+    /* Custom Desktop Trailing Cursor (Enabled ONLY on true hover+fine pointers) */
+    @media (hover: hover) and (pointer: fine) {
+      #cursor-ring,
+      #cursor-dot {
+        display: block;
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      #cursor-ring,
+      #cursor-dot {
+        display: none !important;
+      }
+    }
+
+    /* Modal Backdrop Transition */
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-panel {
+      transform: translate3d(0, 14px, 0) scale(0.985);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .modal-backdrop.open .modal-panel {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    /* CSS Fallback Floating Steam & Beans (shown seamlessly if WebGL is unavailable) */
+    @keyframes floatSlow {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(0, -10px, 0) rotate(6deg); }
+    }
+    @keyframes steamRise {
+      0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.8); }
+      45% { opacity: 0.45; }
+      100% { opacity: 0; transform: translate3d(8px, -46px, 0) scale(1.35); }
+    }
+    .fallback-float { animation: floatSlow 4.5s ease-in-out infinite; }
+    .fallback-steam-1 { animation: steamRise 3.2s ease-out infinite; }
+    .fallback-steam-2 { animation: steamRise 3.8s ease-out 1.1s infinite; }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+      }
+      .card-img-zoom,
+      .tilt-card,
+      .magnetic-btn,
+      .fallback-float,
+      .fallback-steam-1,
+      .fallback-steam-2,
+      #cursor-ring,
+      #cursor-dot {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+      #cursor-ring,
+      #cursor-dot {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#F7F2E9] text-[#25211E]">
+  <!-- =====================================================================
+       0. NON-BLOCKING BRAND PRELOADER (Dismisses quickly < 500ms)
+  ====================================================================== -->
+<div id="coffee-loader">
+    <div class="coffee-loader-content">
+
+        <div class="coffee-cup">
+            <div class="coffee-fill"></div>
+            <div class="coffee-surface"></div>
+        </div>
+
+        <div class="coffee-handle"></div>
+
+        <div class="coffee-loader-brand">MAISON ÉLAN</div>
+        <div class="coffee-loader-text">Preparing your experience</div>
+
+        <div class="coffee-loader-line">
+            <div class="coffee-loader-progress"></div>
+        </div>
+
+    </div>
+</div>
+
+  <!-- =====================================================================
+       CUSTOM DESKTOP TRAILING CURSOR
+  ====================================================================== -->
+  <div
+    id="cursor-ring"
+    class="hidden pointer-events-none fixed top-0 left-0 z-[9999] w-9 h-9 rounded-full border border-[#B89B70]/85 transition-[background-color,border-color] duration-150 will-change-transform"
+  ></div>
+  <div
+    id="cursor-dot"
+    class="hidden pointer-events-none fixed top-0 left-0 z-[9999] w-1.5 h-1.5 rounded-full bg-[#35251E] will-change-transform"
+  ></div>
+
+  <!-- =====================================================================
+       1. MINIMAL STICKY NAVIGATION BAR
+  ====================================================================== -->
+  <header
+    id="site-header"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-5"
+  >
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a
+        href="#home"
+        data-scroll="home"
+        class="group flex items-center gap-3 text-left focus:outline-none"
+      >
+        <span
+          class="font-serif-editorial w-8 h-8 rounded-full border border-[#B89B70]/70 flex items-center justify-center text-xs tracking-widest text-[#35251E] group-hover:bg-[#35251E] group-hover:text-[#F7F2E9] transition-colors duration-300"
+        >
+          MÉ
+        </span>
+        <span
+          class="font-serif-editorial text-xl sm:text-2xl tracking-[0.22em] font-medium text-[#35251E]"
+        >
+          MAISON ÉLAN
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Links with Animated Underline -->
+      <nav class="hidden md:flex items-center gap-9" aria-label="Main Navigation">
+        <a
+          href="#home"
+          data-nav="home"
+          data-scroll="home"
+          class="nav-link relative py-1.5 text-xs tracking-[0.18em] uppercase text-[#35251E]/85 hover:text-[#35251E] transition-colors group"
+        >
+          Home
+          <span
+            class="nav-underline absolute left-0 bottom-0 h-[1.5px] bg-[#B89B70] transition-all duration-300 w-full"
+          ></span>
+        </a>
+        <a
+          href="#story"
+          data-nav="story"
+          data-scroll="story"
+          class="nav-link relative py-1.5 text-xs tracking-[0.18em] uppercase text-[#35251E]/85 hover:text-[#35251E] transition-colors group"
+        >
+          Our Story
+          <span
+            class="nav-underline absolute left-0 bottom-0 h-[1.5px] bg-[#B89B70] transition-all duration-300 w-0 group-hover:w-full"
+          ></span>
+        </a>
+        <a
+          href="#menu"
+          data-nav="menu"
+          data-scroll="menu"
+          class="nav-link relative py-1.5 text-xs tracking-[0.18em] uppercase text-[#35251E]/85 hover:text-[#35251E] transition-colors group"
+        >
+          Menu
+          <span
+            class="nav-underline absolute left-0 bottom-0 h-[1.5px] bg-[#B89B70] transition-all duration-300 w-0 group-hover:w-full"
+          ></span>
+        </a>
+        <a
+          href="#experience"
+          data-nav="experience"
+          data-scroll="experience"
+          class="nav-link relative py-1.5 text-xs tracking-[0.18em] uppercase text-[#35251E]/85 hover:text-[#35251E] transition-colors group"
+        >
+          Experience
+          <span
+            class="nav-underline absolute left-0 bottom-0 h-[1.5px] bg-[#B89B70] transition-all duration-300 w-0 group-hover:w-full"
+          ></span>
+        </a>
+        <a
+          href="#contact"
+          data-nav="contact"
+          data-scroll="contact"
+          class="nav-link relative py-1.5 text-xs tracking-[0.18em] uppercase text-[#35251E]/85 hover:text-[#35251E] transition-colors group"
+        >
+          Contact
+          <span
+            class="nav-underline absolute left-0 bottom-0 h-[1.5px] bg-[#B89B70] transition-all duration-300 w-0 group-hover:w-full"
+          ></span>
+        </a>
+      </nav>
+
+      <!-- Right Action & Mobile Trigger -->
+      <div class="flex items-center gap-4">
+        <button
+          type="button"
+          data-open-reservation
+          class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#35251E]/25 bg-[#EDE3D5]/70 hover:bg-[#35251E] hover:text-[#F7F2E9] text-xs tracking-[0.14em] uppercase text-[#35251E] transition-all duration-300 cursor-pointer"
+        >
+          <span>Reserve</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </button>
+
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          aria-label="Toggle Menu"
+          aria-expanded="false"
+          class="md:hidden p-2.5 rounded-full border border-[#B89B70]/40 text-[#35251E] bg-[#F7F2E9]/80"
+        >
+          <i id="mobile-icon-open" data-lucide="menu" class="w-5 h-5"></i>
+          <i id="mobile-icon-close" data-lucide="x" class="w-5 h-5 hidden"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Responsive Drawer Menu -->
+    <div
+      id="mobile-menu-drawer"
+      class="md:hidden overflow-hidden transition-all duration-300 ease-out bg-[#F7F2E9]/98 border-b border-[#B89B70]/30 max-h-0 opacity-0 py-0"
+    >
+      <div class="px-6 flex flex-col gap-3">
+        <a
+          href="#home"
+          data-scroll="home"
+          class="mobile-nav-item flex items-center justify-between py-2.5 text-left border-b border-[#EDE3D5] text-sm tracking-[0.18em] uppercase text-[#35251E]"
+        >
+          <span>Home</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-[#B89B70]"></i>
+        </a>
+        <a
+          href="#story"
+          data-scroll="story"
+          class="mobile-nav-item flex items-center justify-between py-2.5 text-left border-b border-[#EDE3D5] text-sm tracking-[0.18em] uppercase text-[#35251E]"
+        >
+          <span>Our Story</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-[#B89B70]"></i>
+        </a>
+        <a
+          href="#menu"
+          data-scroll="menu"
+          class="mobile-nav-item flex items-center justify-between py-2.5 text-left border-b border-[#EDE3D5] text-sm tracking-[0.18em] uppercase text-[#35251E]"
+        >
+          <span>Menu</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-[#B89B70]"></i>
+        </a>
+        <a
+          href="#experience"
+          data-scroll="experience"
+          class="mobile-nav-item flex items-center justify-between py-2.5 text-left border-b border-[#EDE3D5] text-sm tracking-[0.18em] uppercase text-[#35251E]"
+        >
+          <span>Experience</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-[#B89B70]"></i>
+        </a>
+        <a
+          href="#contact"
+          data-scroll="contact"
+          class="mobile-nav-item flex items-center justify-between py-2.5 text-left border-b border-[#EDE3D5] text-sm tracking-[0.18em] uppercase text-[#35251E]"
+        >
+          <span>Contact</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-[#B89B70]"></i>
+        </a>
+        <button
+          type="button"
+          data-open-reservation
+          class="mt-2 w-full py-3.5 rounded-full bg-[#35251E] text-[#F7F2E9] text-xs tracking-[0.18em] uppercase"
+        >
+          Reserve a Table
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. HERO SECTION — FIRST IMPRESSION WITH 3D ARTISAN CUP
+  ====================================================================== -->
+  <section
+    id="home"
+    class="relative min-h-screen flex items-center pt-28 pb-16 lg:pt-24 lg:pb-12 overflow-hidden"
+  >
+    <!-- Sunlit Café Interior Background -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img
+        id="hero-bg-image"
+        src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=75"
+        onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=75';"
+        alt="Sunlit architectural café interior"
+        class="w-full h-full object-cover object-center opacity-10 will-change-transform"
+        style="transform: translate3d(0, 0, 0) scale(1.04);"
+      />
+      <div
+        class="absolute inset-0"
+            background: linear-gradient(
+            115deg,
+            rgba(247, 242, 233, 0.55) 0%,
+            rgba(247, 242, 233, 0.35) 50%,
+            rgba(237, 227, 213, 0.20) 99%
+            );
+      ></div>
+      <div
+        class="pointer-events-none absolute -top-24 right-[-10%] w-[640px] h-[640px] rounded-full opacity-55"
+        style="
+          background: radial-gradient(
+            circle,
+            rgba(255, 236, 204, 0.8) 0%,
+            rgba(184, 155, 112, 0.16) 50%,
+            transparent 72%
+          );
+        "
+      ></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <!-- Left Editorial Typography & Magnetic CTAs -->
+        <div class="lg:col-span-6 space-y-7 text-left">
+          <div
+            class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#EDE3D5]/80 border border-[#B89B70]/40"
+          >
+            <i data-lucide="sun" class="w-3.5 h-3.5 text-[#B89B70]"></i>
+            <span class="text-[11px] tracking-[0.24em] uppercase text-[#6C4936] font-medium">
+              Specialty Roastery &amp; Café Atelier
+            </span>
+          </div>
+
+          <h1
+            class="font-serif-editorial text-4xl sm:text-6xl xl:text-[66px] leading-[1.06] font-normal text-[#35251E] tracking-[-0.01em]"
+          >
+            Where Every Moment
+            <span class="italic font-normal text-[#6C4936] block">
+              Brews Something Beautiful.
+            </span>
+          </h1>
+
+          <p class="text-base sm:text-lg leading-relaxed text-[#25211E]/80 max-w-xl font-light">
+            Thoughtfully crafted coffee, beautiful flavours and little moments worth slowing
+            down for. Step into a sunlit sanctuary of single-estate extractions, warm
+            limestone, and unhurried conversation.
+          </p>
+
+          <!-- Magnetic Dual CTAs -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a
+              href="#menu"
+              data-scroll="menu"
+              class="magnetic-btn relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-sm tracking-[0.12em] uppercase font-medium bg-[#35251E] text-[#F7F2E9] hover:bg-[#4A342B] shadow-[0_14px_30px_-10px_rgba(53,37,30,0.45)] border border-[#35251E] transition-colors duration-300 select-none cursor-pointer"
+            >
+              <span>Explore Our Menu</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+
+            <a
+              href="#story"
+              data-scroll="story"
+              class="magnetic-btn relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-sm tracking-[0.12em] uppercase font-medium bg-[#F7F2E9]/95 text-[#35251E] hover:bg-[#EDE3D5] border border-[#B89B70]/60 shadow-[0_10px_25px_-10px_rgba(53,37,30,0.18)] transition-colors duration-300 select-none cursor-pointer"
+            >
+              <span>Discover Our Story</span>
+            </a>
+          </div>
+
+          <!-- Editorial Metadata Strip -->
+          <div class="pt-6 border-t border-[#B89B70]/25 grid grid-cols-3 gap-4 max-w-md">
+            <div>
+              <p class="font-serif-editorial text-xl sm:text-2xl text-[#35251E]">
+                Single-Estate
+              </p>
+              <p class="text-[11px] tracking-[0.14em] uppercase text-[#6C4936]">
+                Small-Batch Roast
+              </p>
+            </div>
+            <div>
+              <p class="font-serif-editorial text-xl sm:text-2xl text-[#35251E]">72-Hour</p>
+              <p class="text-[11px] tracking-[0.14em] uppercase text-[#6C4936]">
+                Laminated Pastry
+              </p>
+            </div>
+            <div>
+              <p class="font-serif-editorial text-xl sm:text-2xl text-[#35251E]">08:00 AM</p>
+              <p class="text-[11px] tracking-[0.14em] uppercase text-[#6C4936]">
+                First Morning Pour
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Interactive 3D Artisan Coffee Cup Centerpiece -->
+        <div class="lg:col-span-6 flex items-center justify-center">
+          <div
+            class="relative w-full h-[380px] sm:h-[450px] lg:h-[520px] flex items-center justify-center select-none"
+          >
+            <!-- Warm Golden Sunbeam Aura behind 3D Cup -->
+            <div
+              class="pointer-events-none absolute w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] rounded-full"
+              style="
+                background: radial-gradient(
+                  circle,
+                  rgba(235, 203, 154, 0.62) 0%,
+                  rgba(184, 155, 112, 0.22) 46%,
+                  rgba(247, 242, 233, 0) 72%
+                );
+              "
+            ></div>
+
+            <!-- Three.js WebGL Mount -->
+            <div
+              id="three-cup-container"
+              class="relative z-10 w-full h-full cursor-grab active:cursor-grabbing"
+            ></div>
+
+            <!-- Lightweight SVG/CSS Fallback (shown automatically if WebGL is unavailable) -->
+            <div
+              id="three-cup-fallback"
+              class="hidden relative z-10 flex flex-col items-center justify-center w-full h-full"
+            >
+              <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+                <div class="fallback-steam-1 absolute -top-6 left-1/3 w-10 h-16 rounded-full bg-white/50"></div>
+                <div class="fallback-steam-2 absolute -top-8 right-1/3 w-12 h-20 rounded-full bg-white/40"></div>
+                <span class="fallback-float absolute top-6 left-4 w-5 h-3.5 rounded-full bg-[#35251E] rotate-45 shadow-md"></span>
+                <span class="fallback-float absolute bottom-10 right-4 w-5 h-3.5 rounded-full bg-[#6C4936] -rotate-12 shadow-md"></span>
+                <svg viewBox="0 0 260 260" class="w-full h-full drop-shadow-[0_24px_28px_rgba(53,37,30,0.22)]">
+                  <circle cx="130" cy="134" r="108" fill="#EDE3D5" stroke="#B89B70" stroke-width="1.5" />
+                  <circle cx="130" cy="130" r="82" fill="#F7F2E9" stroke="#C5A572" stroke-width="2" />
+                  <path d="M210 116 C238 116, 238 148, 210 148" fill="none" stroke="#F7F2E9" stroke-width="11" stroke-linecap="round" />
+                  <circle cx="130" cy="130" r="72" fill="#6C432B" />
+                  <path d="M130 92 C110 108, 108 134, 130 156 C152 134, 150 108, 130 92 Z" fill="#F7F2E9" opacity="0.9" />
+                  <path d="M130 106 C117 118, 116 135, 130 149 C144 135, 143 118, 130 106 Z" fill="#6C432B" opacity="0.45" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Subtle Interactive Hint Pill -->
+            <div
+              class="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7F2E9]/90 border border-[#B89B70]/35 text-[11px] tracking-[0.16em] uppercase text-[#6C4936] shadow-sm whitespace-nowrap"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-[#B89B70]"></span>
+              Love in Every Sip - bite
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. EXPERIENCE SECTION — "More Than Just Coffee."
+  ====================================================================== -->
+  <section id="experience" class="perf-section py-24 sm:py-32 bg-[#EDE3D5]/55 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Left Editorial Café Photography -->
+        <div class="reveal-on-scroll lg:col-span-6 relative">
+          <div
+            class="relative rounded-[28px] overflow-hidden shadow-[0_28px_60px_-20px_rgba(53,37,30,0.25)] border border-[#B89B70]/30 aspect-[4/5]"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80"
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80';"
+              alt="Barista pouring specialty coffee in warm morning light"
+              loading="lazy"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#25211E]/55 via-transparent to-transparent"
+            ></div>
+            <div class="absolute bottom-6 left-6 right-6 text-[#F7F2E9]">
+              <p class="text-[11px] tracking-[0.22em] uppercase text-[#EDE3D5]/90 mb-1">
+                Morning Extraction Ritual
+              </p>
+              <p class="font-serif-editorial text-2xl font-normal">
+                Precision temperature, unhurried pour.
+              </p>
+            </div>
+          </div>
+
+          <!-- Floating Editorial Callout Badge -->
+          <div
+            class="hidden sm:block absolute -bottom-6 -right-6 max-w-[240px] p-5 rounded-2xl bg-[#F7F2E9] border border-[#B89B70]/40 shadow-[0_20px_40px_-15px_rgba(53,37,30,0.2)]"
+          >
+            <div class="flex items-center gap-2 text-[#B89B70] mb-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span class="text-[10px] tracking-[0.22em] uppercase font-semibold">
+                Sensory Ritual
+              </span>
+            </div>
+            <p class="font-serif-editorial text-xl text-[#35251E] leading-snug">
+              “Every cup is served in hand-thrown stoneware warmed to 62°C.”
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Three Structured Experience Highlights -->
+        <div class="lg:col-span-6 space-y-10">
+          <div class="reveal-on-scroll">
+            <p class="text-xs tracking-[0.26em] uppercase text-[#B89B70] mb-3 font-medium">
+              The Maison Élan Philosophy
+            </p>
+            <h2
+              class="font-serif-editorial text-4xl sm:text-5xl text-[#35251E] font-normal leading-tight"
+            >
+              More Than Just Coffee.
+            </h2>
+            <p class="mt-4 text-[#25211E]/75 leading-relaxed font-light">
+              We designed MAISON ÉLAN as an antidote to hurried city routines—where
+              acoustics, natural daylight, and tactile ceramics turn a daily cup into a
+              restorative pause.
+            </p>
+          </div>
+
+          <div class="space-y-6 pt-2">
+            <!-- Highlight 1 -->
+            <div
+              class="reveal-on-scroll group flex items-start gap-5 p-6 rounded-2xl bg-[#F7F2E9]/85 hover:bg-[#F7F2E9] border border-[#B89B70]/25 hover:border-[#B89B70]/60 transition-all duration-300 shadow-[0_10px_30px_-15px_rgba(53,37,30,0.08)]"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-[#EDE3D5] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E] group-hover:bg-[#35251E] group-hover:text-[#F7F2E9] transition-colors duration-300"
+              >
+                <i data-lucide="coffee" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-serif-editorial text-2xl text-[#35251E] mb-1.5">
+                  Crafted With Care
+                </h3>
+                <p class="text-sm leading-relaxed text-[#25211E]/75 font-light">
+                  Single-origin beans roasted in small batches and extracted with precision to
+                  honour terroir, sweetness, and aromatic clarity.
+                </p>
+              </div>
+            </div>
+
+            <!-- Highlight 2 -->
+            <div
+              class="reveal-on-scroll group flex items-start gap-5 p-6 rounded-2xl bg-[#F7F2E9]/85 hover:bg-[#F7F2E9] border border-[#B89B70]/25 hover:border-[#B89B70]/60 transition-all duration-300 shadow-[0_10px_30px_-15px_rgba(53,37,30,0.08)]"
+              style="transition-delay: 120ms"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-[#EDE3D5] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E] group-hover:bg-[#35251E] group-hover:text-[#F7F2E9] transition-colors duration-300"
+              >
+                <i data-lucide="heart" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-serif-editorial text-2xl text-[#35251E] mb-1.5">
+                  Moments Worth Sharing
+                </h3>
+                <p class="text-sm leading-relaxed text-[#25211E]/75 font-light">
+                  Unhurried spaces designed for quiet conversation, creative reflection, and
+                  warm connection across shared tables.
+                </p>
+              </div>
+            </div>
+
+            <!-- Highlight 3 -->
+            <div
+              class="reveal-on-scroll group flex items-start gap-5 p-6 rounded-2xl bg-[#F7F2E9]/85 hover:bg-[#F7F2E9] border border-[#B89B70]/25 hover:border-[#B89B70]/60 transition-all duration-300 shadow-[0_10px_30px_-15px_rgba(53,37,30,0.08)]"
+              style="transition-delay: 240ms"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-[#EDE3D5] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E] group-hover:bg-[#35251E] group-hover:text-[#F7F2E9] transition-colors duration-300"
+              >
+                <i data-lucide="sun" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-serif-editorial text-2xl text-[#35251E] mb-1.5">
+                  Comfort In Every Corner
+                </h3>
+                <p class="text-sm leading-relaxed text-[#25211E]/75 font-light">
+                  Tactile natural stone, warm European oak, and soft natural daylight shifting
+                  gently from morning gold till evening dusk.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. SIGNATURE MENU — "Made To Be Savoured."
+  ====================================================================== -->
+  <section id="menu" class="perf-section py-24 sm:py-32 bg-[#F7F2E9]">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <!-- Editorial Section Header -->
+      <div class="reveal-on-scroll text-center max-w-2xl mx-auto mb-14">
+        <p class="text-xs tracking-[0.26em] uppercase text-[#B89B70] mb-3 font-medium">
+          Curated Tasting Selection
+        </p>
+        <h2
+          class="font-serif-editorial text-4xl sm:text-5xl lg:text-[54px] text-[#35251E] font-normal leading-tight"
+        >
+          Made To Be Savoured.
+        </h2>
+        <p class="mt-4 text-[#25211E]/75 text-sm sm:text-base font-light leading-relaxed">
+          Select any creation below to explore origin notes, brew ratios, and pairing
+          recommendations from our head barista.
+        </p>
+
+        <!-- Category Filter Pills -->
+        <div
+          id="menu-filter-bar"
+          class="mt-8 flex flex-wrap items-center justify-center gap-2.5"
+        >
+          <button
+            type="button"
+            data-category="All"
+            class="menu-filter-btn px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase transition-all duration-300 cursor-pointer bg-[#35251E] text-[#F7F2E9] shadow-sm"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            data-category="Espresso Bar"
+            class="menu-filter-btn px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase transition-all duration-300 cursor-pointer bg-[#EDE3D5]/70 text-[#35251E]/80 hover:bg-[#EDE3D5] border border-[#B89B70]/25"
+          >
+            Espresso Bar
+          </button>
+          <button
+            type="button"
+            data-category="Signature Creations"
+            class="menu-filter-btn px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase transition-all duration-300 cursor-pointer bg-[#EDE3D5]/70 text-[#35251E]/80 hover:bg-[#EDE3D5] border border-[#B89B70]/25"
+          >
+            Signature Creations
+          </button>
+          <button
+            type="button"
+            data-category="Viennoiserie"
+            class="menu-filter-btn px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase transition-all duration-300 cursor-pointer bg-[#EDE3D5]/70 text-[#35251E]/80 hover:bg-[#EDE3D5] border border-[#B89B70]/25"
+          >
+            Viennoiserie
+          </button>
+        </div>
+      </div>
+
+      <!-- Luxury Editorial Food Magazine Grid -->
+      <div
+        id="menu-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+      ></div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. THE CAFÉ ATMOSPHERE — "Find Your Favourite Corner."
+  ====================================================================== -->
+  <section id="atmosphere" class="perf-section relative py-24 sm:py-32 bg-[#25211E] text-[#F7F2E9] overflow-hidden">
+    <!-- Background Architectural Image with Scroll Parallax -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img
+        id="atmosphere-bg-img"
+        src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=75"
+        alt="MAISON ÉLAN Interior"
+        loading="lazy"
+        class="w-full h-full object-cover opacity-40 transition-opacity duration-500 will-change-transform"
+        style="transform: translate3d(0, 0, 0) scale(1.08);"
+      />
+      <div
+        class="absolute inset-0"
+        style="
+          background: linear-gradient(
+            180deg,
+            rgba(37, 33, 30, 0.88) 0%,
+            rgba(37, 33, 30, 0.65) 50%,
+            rgba(37, 33, 30, 0.94) 100%
+          );
+        "
+      ></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
+      <div class="reveal-on-scroll max-w-2xl mb-14">
+        <p class="text-xs tracking-[0.26em] uppercase text-[#B89B70] mb-3">
+          Spatial Sanctuary &amp; Interior Architecture
+        </p>
+        <h2
+          class="font-serif-editorial text-4xl sm:text-5xl lg:text-[54px] text-[#F7F2E9] font-normal leading-tight"
+        >
+          Find Your Favourite Corner.
+        </h2>
+        <p class="mt-4 text-[#EDE3D5]/80 font-light leading-relaxed">
+          Warm wooden furniture, hand-honed cream stone textures, soft pendant lighting, an
+          inviting espresso counter, natural sunlight, and thoughtful seating arrangements.
+        </p>
+      </div>
+
+      <!-- Interactive Spatial Corner Switcher -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left Selector Tabs -->
+        <div id="corner-tabs-list" class="lg:col-span-5 flex flex-col justify-between gap-4">
+          <button
+            type="button"
+            data-corner-idx="0"
+            class="corner-tab-btn text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer bg-[#F7F2E9]/14 border-[#B89B70] shadow-[0_18px_40px_-15px_rgba(0,0,0,0.45)]"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] tracking-[0.22em] uppercase text-[#B89B70]">
+                01 · 08:00 AM — MORNING GOLDEN HOUR
+              </span>
+              <i
+                data-lucide="compass"
+                class="corner-compass w-4 h-4 text-[#B89B70] rotate-45 transition-transform duration-300"
+              ></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl sm:text-3xl text-[#F7F2E9]">
+              The Sunlit Atrium
+            </h3>
+          </button>
+
+          <button
+            type="button"
+            data-corner-idx="1"
+            class="corner-tab-btn text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer bg-[#F7F2E9]/[0.03] border-[#F7F2E9]/10 hover:border-[#B89B70]/45"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] tracking-[0.22em] uppercase text-[#B89B70]">
+                02 · CRAFT &amp; CONVERSATION COUNTER
+              </span>
+              <i
+                data-lucide="compass"
+                class="corner-compass w-4 h-4 text-[#F7F2E9]/40 transition-transform duration-300"
+              ></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl sm:text-3xl text-[#F7F2E9]">
+              The Espresso Bar
+            </h3>
+          </button>
+
+          <button
+            type="button"
+            data-corner-idx="2"
+            class="corner-tab-btn text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer bg-[#F7F2E9]/[0.03] border-[#F7F2E9]/10 hover:border-[#B89B70]/45"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] tracking-[0.22em] uppercase text-[#B89B70]">
+                03 · AFTERNOON SANCTUARY
+              </span>
+              <i
+                data-lucide="compass"
+                class="corner-compass w-4 h-4 text-[#F7F2E9]/40 transition-transform duration-300"
+              ></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl sm:text-3xl text-[#F7F2E9]">
+              The Quiet Reading Alcove
+            </h3>
+          </button>
+        </div>
+
+        <!-- Right Active Corner Showcase Card -->
+        <div class="lg:col-span-7">
+          <div
+            class="h-full rounded-[28px] overflow-hidden border border-[#B89B70]/35 bg-[#35251E]/85 flex flex-col justify-between shadow-2xl"
+          >
+            <div class="relative h-72 sm:h-80 overflow-hidden">
+              <img
+                id="corner-card-img"
+                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80"
+                alt="The Sunlit Atrium"
+                loading="lazy"
+                class="w-full h-full object-cover transition-opacity duration-500"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-[#25211E] via-transparent to-transparent opacity-80"
+              ></div>
+              <div
+                id="corner-materials"
+                class="absolute bottom-5 left-6 right-6 flex flex-wrap gap-2"
+              >
+                <span
+                  class="px-3 py-1 rounded-full bg-[#25211E]/90 border border-[#B89B70]/40 text-[11px] tracking-wider text-[#EDE3D5]"
+                  >Honed Cream Limestone</span
+                >
+                <span
+                  class="px-3 py-1 rounded-full bg-[#25211E]/90 border border-[#B89B70]/40 text-[11px] tracking-wider text-[#EDE3D5]"
+                  >Warm European Oak</span
+                >
+                <span
+                  class="px-3 py-1 rounded-full bg-[#25211E]/90 border border-[#B89B70]/40 text-[11px] tracking-wider text-[#EDE3D5]"
+                  >Soft Pendant Lighting</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="p-7 sm:p-9 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
+            >
+              <div class="max-w-lg">
+                <h4
+                  id="corner-card-title"
+                  class="font-serif-editorial text-3xl text-[#F7F2E9] mb-2.5"
+                >
+                  The Sunlit Atrium
+                </h4>
+                <p
+                  id="corner-card-desc"
+                  class="text-sm text-[#EDE3D5]/80 leading-relaxed font-light"
+                >
+                  Tall arched steel windows bathe hand-troweled cream limestone walls and warm
+                  white-oak tables in gentle morning light, paired with soft pendant lighting
+                  and comfortable seating arrangements.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                id="book-corner-btn"
+                class="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#B89B70] text-[#25211E] text-xs tracking-[0.16em] uppercase font-semibold hover:bg-[#C8AC82] transition-colors cursor-pointer"
+              >
+                <span>Book This Corner</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. OUR STORY — "Rooted In Passion. Served With Love."
+  ====================================================================== -->
+  <section id="story" class="perf-section py-24 sm:py-32 bg-[#F7F2E9]">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Left Editorial Narrative & Pull-Quote -->
+        <div class="reveal-on-scroll lg:col-span-6 space-y-6">
+          <div class="flex items-center gap-3">
+            <span class="h-[1px] w-10 bg-[#B89B70]"></span>
+            <span class="text-xs tracking-[0.26em] uppercase text-[#B89B70] font-medium">
+              Our Heritage &amp; Craft
+            </span>
+          </div>
+
+          <h2
+            class="font-serif-editorial text-4xl sm:text-5xl lg:text-[54px] text-[#35251E] font-normal leading-[1.1]"
+          >
+            Rooted In Passion.
+            <span class="italic text-[#6C4936]">Served With Love.</span>
+          </h2>
+
+          <p class="text-base text-[#25211E]/80 leading-relaxed font-light">
+            MAISON ÉLAN was conceived around four enduring pillars: quality ingredients
+            sourced with care, carefully prepared coffee roasted and extracted to reveal
+            natural sweetness, thoughtful hospitality that feels warm and unhurried, and a
+            welcoming atmosphere where every guest can settle in.
+          </p>
+
+          <p class="text-base text-[#25211E]/80 leading-relaxed font-light">
+            From high-elevation estates to our laminated pastry bench, every detail is
+            measured not for haste, but for poise—inviting you to pause, converse, and
+            savour the quiet beauty of a well-made cup.
+          </p>
+
+          <!-- Editorial Pull-Quote -->
+          <blockquote class="my-8 pl-6 border-l-2 border-[#B89B70] py-1">
+            <p class="font-serif-editorial text-2xl sm:text-3xl italic text-[#35251E] leading-snug">
+              “We believe luxury is not excess—it is time unhurried, light well-placed, and a
+              cup brewed with quiet devotion.”
+            </p>
+            <footer class="mt-2.5 text-xs tracking-[0.2em] uppercase text-[#6C4936]">
+              — Founders’ Note, MAISON ÉLAN Concept
+            </footer>
+          </blockquote>
+        </div>
+
+        <!-- Right Asymmetric Editorial Image Collage -->
+        <div class="reveal-on-scroll lg:col-span-6" style="transition-delay: 140ms">
+          <div class="grid grid-cols-12 gap-4 sm:gap-6 items-center">
+            <div
+              class="col-span-7 rounded-[24px] overflow-hidden shadow-[0_24px_50px_-18px_rgba(53,37,30,0.22)] border border-[#B89B70]/25 aspect-[3/4]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=85"
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85';"
+                alt="Roasted specialty coffee beans and precision craft"
+                loading="lazy"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div class="col-span-5 space-y-4 sm:space-y-6">
+              <div
+                class="rounded-[22px] overflow-hidden shadow-lg border border-[#B89B70]/25 aspect-square"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=85"
+                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=85';"
+                  alt="Latte art micro-foam pour"
+                  loading="lazy"
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div class="p-5 sm:p-6 rounded-[22px] bg-[#EDE3D5] border border-[#B89B70]/35">
+                <i data-lucide="feather" class="w-5 h-5 text-[#B89B70] mb-2.5"></i>
+                <p class="font-serif-editorial text-xl text-[#35251E] leading-snug">
+                  Quality Ingredients &amp; Thoughtful Hospitality
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       7. CUSTOMER LOVE — MINIMAL TESTIMONIAL SECTION
+  ====================================================================== -->
+  <section class="perf-section py-24 bg-[#EDE3D5]/65 border-y border-[#B89B70]/20">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <div class="reveal-on-scroll text-center max-w-xl mx-auto mb-16">
+        <p class="text-xs tracking-[0.26em] uppercase text-[#B89B70] mb-3 font-medium">
+          Customer Love
+        </p>
+        <h2 class="font-serif-editorial text-4xl sm:text-5xl text-[#35251E] font-normal">
+          Quiet Reflections From Guests.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div
+          class="reveal-on-scroll h-full flex flex-col justify-between p-8 sm:p-9 rounded-[24px] bg-[#F7F2E9] border border-[#B89B70]/30 shadow-[0_14px_35px_-16px_rgba(53,37,30,0.1)]"
+        >
+          <div>
+            <span class="font-serif-editorial block text-5xl leading-none text-[#B89B70]/60 mb-3"
+              >“</span
+            >
+            <p class="font-serif-editorial text-xl sm:text-[22px] text-[#35251E] leading-relaxed">
+              Stepping inside feels like exhaling after a busy week. The morning sunlight
+              across the stone tables and the calm texture of the cappuccino make it a space
+              I love returning to.
+            </p>
+          </div>
+          <div
+            class="mt-8 pt-5 border-t border-[#B89B70]/20 flex items-center justify-between gap-2"
+          >
+            <div>
+              <p class="text-sm font-medium text-[#35251E]">Arundhati Menon</p>
+              <p class="text-xs text-[#6C4936] font-light">Architectural Designer</p>
+            </div>
+            <span
+              class="text-[10px] tracking-[0.16em] uppercase px-3 py-1 rounded-full bg-[#EDE3D5] text-[#6C4936]"
+              >Morning Visit</span
+            >
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div
+          class="reveal-on-scroll h-full flex flex-col justify-between p-8 sm:p-9 rounded-[24px] bg-[#F7F2E9] border border-[#B89B70]/30 shadow-[0_14px_35px_-16px_rgba(53,37,30,0.1)]"
+          style="transition-delay: 110ms"
+        >
+          <div>
+            <span class="font-serif-editorial block text-5xl leading-none text-[#B89B70]/60 mb-3"
+              >“</span
+            >
+            <p class="font-serif-editorial text-xl sm:text-[22px] text-[#35251E] leading-relaxed">
+              Nothing feels rushed or loud. You can taste the care in the laminated butter
+              croissant and the clean cocoa balance in the espresso.
+            </p>
+          </div>
+          <div
+            class="mt-8 pt-5 border-t border-[#B89B70]/20 flex items-center justify-between gap-2"
+          >
+            <div>
+              <p class="text-sm font-medium text-[#35251E]">Rohan Deshmukh</p>
+              <p class="text-xs text-[#6C4936] font-light">Editorial Photographer</p>
+            </div>
+            <span
+              class="text-[10px] tracking-[0.16em] uppercase px-3 py-1 rounded-full bg-[#EDE3D5] text-[#6C4936]"
+              >Afternoon Coffee</span
+            >
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div
+          class="reveal-on-scroll h-full flex flex-col justify-between p-8 sm:p-9 rounded-[24px] bg-[#F7F2E9] border border-[#B89B70]/30 shadow-[0_14px_35px_-16px_rgba(53,37,30,0.1)]"
+          style="transition-delay: 220ms"
+        >
+          <div>
+            <span class="font-serif-editorial block text-5xl leading-none text-[#B89B70]/60 mb-3"
+              >“</span
+            >
+            <p class="font-serif-editorial text-xl sm:text-[22px] text-[#35251E] leading-relaxed">
+              Thoughtful hospitality without intrusion. The Caramel Cloud Latte served in warm
+              ceramics turns a simple catch-up into something memorable.
+            </p>
+          </div>
+          <div
+            class="mt-8 pt-5 border-t border-[#B89B70]/20 flex items-center justify-between gap-2"
+          >
+            <div>
+              <p class="text-sm font-medium text-[#35251E]">Meera Krishnan</p>
+              <p class="text-xs text-[#6C4936] font-light">Ceramicist &amp; Writer</p>
+            </div>
+            <span
+              class="text-[10px] tracking-[0.16em] uppercase px-3 py-1 rounded-full bg-[#EDE3D5] text-[#6C4936]"
+              >Weekend Table</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       8. VISIT US — EDITABLE CONCEPT STUDIO LOCATION & RESERVATION
+  ====================================================================== -->
+  <section id="contact" class="perf-section py-24 sm:py-32 bg-[#F7F2E9]">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <div
+        class="reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"
+      >
+        <div>
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EDE3D5] border border-[#B89B70]/40 text-[10px] tracking-[0.2em] uppercase text-[#6C4936] mb-4"
+          >
+            <span>Fictional Concept Demo · Editable Sample Details</span>
+          </div>
+          <h2
+            class="font-serif-editorial text-4xl sm:text-5xl lg:text-[54px] text-[#35251E] font-normal"
+          >
+            Visit Maison Élan.
+          </h2>
+        </div>
+
+        <!-- Inline Edit Toggle for Sample Business Details -->
+        <button
+          type="button"
+          id="toggle-edit-details"
+          class="self-start md:self-auto inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#EDE3D5] hover:bg-[#E3D5C1] border border-[#B89B70]/45 text-xs tracking-[0.14em] uppercase text-[#35251E] transition-colors cursor-pointer"
+        >
+          <i id="edit-icon" data-lucide="edit-3" class="w-3.5 h-3.5 text-[#6C4936]"></i>
+          <i id="save-icon" data-lucide="check" class="w-3.5 h-3.5 text-[#35251E] hidden"></i>
+          <span id="edit-details-label">Edit Sample Details</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left Editable Contact & Hours Card -->
+        <div
+          class="reveal-on-scroll lg:col-span-5 rounded-[28px] bg-[#EDE3D5]/75 border border-[#B89B70]/35 p-8 sm:p-10 flex flex-col justify-between space-y-8"
+        >
+          <div class="space-y-6">
+            <!-- Café Address -->
+            <div class="flex items-start gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-[#F7F2E9] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E]"
+              >
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-[11px] tracking-[0.2em] uppercase text-[#6C4936] mb-1">
+                  Café Address (Sample)
+                </p>
+                <p id="display-address" class="text-base text-[#35251E] font-normal">
+                  14 Rue de Solitude, Koregaon Park, Pune 411001
+                </p>
+                <input
+                  id="input-address"
+                  type="text"
+                  value="14 Rue de Solitude, Koregaon Park, Pune 411001"
+                  aria-label="Edit café address"
+                  class="hidden w-full px-3 py-2 rounded-lg bg-[#F7F2E9] border border-[#B89B70] text-sm text-[#35251E] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Opening Hours -->
+            <div class="flex items-start gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-[#F7F2E9] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E]"
+              >
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-[11px] tracking-[0.2em] uppercase text-[#6C4936] mb-1">
+                  Opening Hours (Sample)
+                </p>
+                <p id="display-hours" class="text-base text-[#35251E] font-normal">
+                  Tue – Sun · 8:00 AM – 10:30 PM (Closed Mondays)
+                </p>
+                <input
+                  id="input-hours"
+                  type="text"
+                  value="Tue – Sun · 8:00 AM – 10:30 PM (Closed Mondays)"
+                  aria-label="Edit opening hours"
+                  class="hidden w-full px-3 py-2 rounded-lg bg-[#F7F2E9] border border-[#B89B70] text-sm text-[#35251E] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="flex items-start gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-[#F7F2E9] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E]"
+              >
+                <i data-lucide="phone" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-[11px] tracking-[0.2em] uppercase text-[#6C4936] mb-1">
+                  Contact Number (Sample)
+                </p>
+                <p id="display-phone" class="text-base text-[#35251E] font-normal">
+                  +91 20 4855 0192
+                </p>
+                <input
+                  id="input-phone"
+                  type="text"
+                  value="+91 20 4855 0192"
+                  aria-label="Edit contact number"
+                  class="hidden w-full px-3 py-2 rounded-lg bg-[#F7F2E9] border border-[#B89B70] text-sm text-[#35251E] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Instagram Handle -->
+            <div class="flex items-start gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-[#F7F2E9] border border-[#B89B70]/40 flex items-center justify-center shrink-0 text-[#35251E]"
+              >
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-[11px] tracking-[0.2em] uppercase text-[#6C4936] mb-1">
+                  Instagram Link (Sample)
+                </p>
+                <a
+                  id="display-instagram-link"
+                  href="https://instagram.com/maisonelan.cafe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-base text-[#35251E] hover:text-[#6C4936] underline decoration-[#B89B70]/60 underline-offset-4"
+                >
+                  <span id="display-instagram-text">@maisonelan.cafe</span>
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-[#B89B70]"></i>
+                </a>
+                <input
+                  id="input-instagram"
+                  type="text"
+                  value="@maisonelan.cafe"
+                  aria-label="Edit Instagram handle"
+                  class="hidden w-full px-3 py-2 rounded-lg bg-[#F7F2E9] border border-[#B89B70] text-sm text-[#35251E] focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Reservation / Enquiry CTA -->
+          <div class="pt-4 border-t border-[#B89B70]/25">
+            <button
+              type="button"
+              data-open-reservation
+              class="magnetic-btn w-full inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-sm tracking-[0.12em] uppercase font-medium bg-[#35251E] text-[#F7F2E9] hover:bg-[#4A342B] shadow-[0_14px_30px_-10px_rgba(53,37,30,0.45)] transition-colors duration-300 cursor-pointer"
+            >
+              <span>Reservation or Enquiry</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Stylized Map Embed Placeholder -->
+        <div class="reveal-on-scroll lg:col-span-7" style="transition-delay: 120ms">
+          <div
+            class="relative h-full min-h-[380px] rounded-[28px] overflow-hidden border border-[#B89B70]/35 bg-[#EDE3D5] shadow-[0_22px_50px_-20px_rgba(53,37,30,0.18)] flex flex-col justify-between p-8"
+          >
+            <!-- Architectural Vector Street Map Illustration -->
+            <svg
+              class="absolute inset-0 w-full h-full object-cover opacity-55"
+              viewBox="0 0 800 520"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <rect width="800" height="520" fill="#EDE3D5" />
+              <path
+                d="M480 40 C580 30, 720 80, 750 190 C770 270, 670 330, 560 300 C470 275, 430 140, 480 40 Z"
+                fill="#E2D7C3"
+              />
+              <path d="M-20 140 L820 210" stroke="#F7F2E9" stroke-width="18" />
+              <path d="M-20 360 L820 290" stroke="#F7F2E9" stroke-width="14" />
+              <path d="M230 -20 L310 540" stroke="#F7F2E9" stroke-width="16" />
+              <path d="M540 -20 L470 540" stroke="#F7F2E9" stroke-width="12" />
+              <path
+                d="M-20 140 L820 210"
+                stroke="#B89B70"
+                stroke-opacity="0.35"
+                stroke-width="1"
+                stroke-dasharray="4 4"
+              />
+              <path
+                d="M230 -20 L310 540"
+                stroke="#B89B70"
+                stroke-opacity="0.35"
+                stroke-width="1"
+                stroke-dasharray="4 4"
+              />
+            </svg>
+
+            <!-- Top Map Overlay Badge -->
+            <div class="relative z-10 flex items-center justify-between gap-4">
+              <span
+                class="px-4 py-1.5 rounded-full bg-[#F7F2E9]/95 border border-[#B89B70]/40 text-[11px] tracking-[0.18em] uppercase text-[#35251E]"
+              >
+                Google Maps Embed Placeholder · Concept
+              </span>
+              <span class="text-xs text-[#6C4936] bg-[#F7F2E9]/90 px-3 py-1 rounded-full">
+                Courtyard &amp; Street Access
+              </span>
+            </div>
+
+            <!-- Center Architectural Pin -->
+            <div class="relative z-10 my-auto flex flex-col items-center text-center">
+              <div class="relative flex items-center justify-center">
+                <div
+                  class="relative w-14 h-14 rounded-full bg-[#35251E] text-[#F7F2E9] flex items-center justify-center shadow-xl border-2 border-[#B89B70]"
+                >
+                  <i data-lucide="coffee" class="w-6 h-6 text-[#B89B70]"></i>
+                </div>
+              </div>
+              <div
+                class="mt-4 px-6 py-3.5 rounded-2xl bg-[#F7F2E9]/95 border border-[#B89B70]/45 shadow-lg max-w-sm"
+              >
+                <p class="font-serif-editorial text-xl text-[#35251E]">
+                  MAISON ÉLAN Concept Space
+                </p>
+                <p id="map-pin-address" class="text-xs text-[#6C4936] mt-0.5">
+                  14 Rue de Solitude, Koregaon Park, Pune 411001
+                </p>
+              </div>
+            </div>
+
+            <!-- Bottom Map Action Bar -->
+            <div
+              class="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#B89B70]/25"
+            >
+              <span class="text-xs text-[#6C4936] italic">
+                Fictional demo concept · Not a live operating café
+              </span>
+              <button
+                type="button"
+                data-open-reservation
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#35251E] text-[#F7F2E9] text-xs tracking-[0.14em] uppercase hover:bg-[#4E372D] transition-colors cursor-pointer"
+              >
+                <span>Plan Your Visit</span>
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       9. SOPHISTICATED FOOTER
+  ====================================================================== -->
+  <footer class="bg-[#25211E] text-[#EDE3D5] pt-20 pb-12 border-t border-[#B89B70]/20">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <div
+        class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-[#EDE3D5]/12"
+      >
+        <!-- Brand Statement & Tagline -->
+        <div class="md:col-span-5 space-y-5">
+          <div class="flex items-center gap-3">
+            <span
+              class="font-serif-editorial w-9 h-9 rounded-full border border-[#B89B70]/70 flex items-center justify-center text-xs tracking-widest text-[#F7F2E9]"
+            >
+              MÉ
+            </span>
+            <span class="font-serif-editorial text-2xl tracking-[0.24em] text-[#F7F2E9]">
+              MAISON ÉLAN
+            </span>
+          </div>
+
+          <p class="text-sm text-[#EDE3D5]/75 leading-relaxed max-w-sm font-light">
+            A specialty coffee concept celebrating small-batch roasting, delicate
+            viennoiserie, and calm, sunlit spaces designed for unhurried moments.
+          </p>
+
+          <p class="font-serif-editorial text-2xl italic text-[#B89B70]">
+            “Slow down. Sip beautifully.”
+          </p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="md:col-span-3 space-y-4">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B89B70]">Navigation</p>
+          <ul class="space-y-2.5 text-sm text-[#EDE3D5]/80 font-light">
+            <li>
+              <a href="#home" data-scroll="home" class="hover:text-[#B89B70] transition-colors"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a href="#story" data-scroll="story" class="hover:text-[#B89B70] transition-colors"
+                >Our Story</a
+              >
+            </li>
+            <li>
+              <a href="#menu" data-scroll="menu" class="hover:text-[#B89B70] transition-colors"
+                >Menu</a
+              >
+            </li>
+            <li>
+              <a
+                href="#experience"
+                data-scroll="experience"
+                class="hover:text-[#B89B70] transition-colors"
+                >Experience</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contact"
+                data-scroll="contact"
+                class="hover:text-[#B89B70] transition-colors"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Editable Contact Info & Social -->
+        <div class="md:col-span-4 space-y-4">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B89B70]">
+            Contact Information
+          </p>
+          <div class="space-y-2.5 text-sm text-[#EDE3D5]/80 font-light">
+            <p id="footer-address">14 Rue de Solitude, Koregaon Park, Pune 411001</p>
+            <p id="footer-hours">Tue – Sun · 8:00 AM – 10:30 PM (Closed Mondays)</p>
+            <p id="footer-phone">+91 20 4855 0192</p>
+          </div>
+
+          <div class="pt-2 flex items-center gap-3">
+            <a
+              id="footer-instagram-link"
+              href="https://instagram.com/maisonelan.cafe"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow MAISON ÉLAN on Instagram"
+              class="w-10 h-10 rounded-full border border-[#B89B70]/45 flex items-center justify-center text-[#F7F2E9] hover:bg-[#B89B70] hover:text-[#25211E] transition-colors"
+            >
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <span id="footer-instagram" class="text-xs tracking-wider text-[#EDE3D5]/70">
+              @maisonelan.cafe
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Copyright & Concept Disclaimer -->
+      <div
+        class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#EDE3D5]/55"
+      >
+        <p>© 2026 MAISON ÉLAN. All rights reserved. Fictional demo concept.</p>
+        <p class="tracking-wider">Slow down. Sip beautifully.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       MODAL 1: SIGNATURE MENU TASTING NOTES & PAIRING MODAL
+  ====================================================================== -->
+  <div
+    id="tasting-modal"
+    class="modal-backdrop fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6 bg-[#25211E]/70"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="modal-panel relative w-full max-w-2xl rounded-[28px] bg-[#F7F2E9] border border-[#B89B70]/45 shadow-2xl overflow-hidden"
+    >
+      <button
+        type="button"
+        id="close-tasting-modal"
+        aria-label="Close modal"
+        class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#F7F2E9]/95 border border-[#B89B70]/40 flex items-center justify-center text-[#35251E] hover:bg-[#35251E] hover:text-[#F7F2E9] transition-colors cursor-pointer"
+      >
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="grid grid-cols-1 sm:grid-cols-12">
+        <div class="sm:col-span-5 h-64 sm:h-auto bg-[#EDE3D5]">
+          <img
+            id="modal-item-img"
+            src=""
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <div class="sm:col-span-7 p-7 sm:p-9 flex flex-col justify-between space-y-6">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span
+                id="modal-item-category"
+                class="text-[10px] tracking-[0.22em] uppercase text-[#B89B70] font-semibold"
+              ></span>
+              <span
+                id="modal-item-price"
+                class="text-lg font-medium text-[#35251E]"
+              ></span>
+            </div>
+
+            <h3
+              id="modal-item-name"
+              class="font-serif-editorial text-3xl text-[#35251E] mb-3"
+            ></h3>
+
+            <p
+              id="modal-item-desc"
+              class="text-sm text-[#25211E]/80 leading-relaxed font-light mb-5"
+            ></p>
+
+            <div class="space-y-3 pt-4 border-t border-[#B89B70]/25 text-xs">
+              <div>
+                <span class="uppercase tracking-[0.16em] text-[#6C4936] block mb-1.5">
+                  Tasting Notes
+                </span>
+                <div id="modal-item-notes" class="flex flex-wrap gap-1.5"></div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 pt-2">
+                <div>
+                  <span class="uppercase tracking-[0.14em] text-[#6C4936] block">
+                    Origin / Craft
+                  </span>
+                  <span id="modal-item-origin" class="text-[#35251E] font-medium"></span>
+                </div>
+                <div>
+                  <span class="uppercase tracking-[0.14em] text-[#6C4936] block">
+                    Suggested Pairing
+                  </span>
+                  <span id="modal-item-pairing" class="text-[#35251E] font-medium"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="modal-reserve-order-btn"
+            class="w-full py-3 rounded-full bg-[#35251E] text-[#F7F2E9] text-xs tracking-[0.18em] uppercase hover:bg-[#4B352C] transition-colors cursor-pointer"
+          >
+            Reserve Table &amp; Note Pairing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: INTERACTIVE TABLE RESERVATION & ENQUIRY MODAL
+  ====================================================================== -->
+  <div
+    id="reservation-modal"
+    class="modal-backdrop fixed inset-0 z-[85] flex items-center justify-center p-4 sm:p-6 bg-[#25211E]/70"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="modal-panel relative w-full max-w-lg rounded-[28px] bg-[#F7F2E9] border border-[#B89B70]/45 p-7 sm:p-10 shadow-2xl"
+    >
+      <button
+        type="button"
+        id="close-reservation-modal"
+        aria-label="Close reservation modal"
+        class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#EDE3D5] flex items-center justify-center text-[#35251E] hover:bg-[#35251E] hover:text-[#F7F2E9] transition-colors cursor-pointer"
+      >
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Reservation Form View -->
+      <div id="reservation-form-view">
+        <p class="text-[11px] tracking-[0.24em] uppercase text-[#B89B70] mb-1.5">
+          Concept Demo · Reservation &amp; Enquiry
+        </p>
+        <h3 class="font-serif-editorial text-3xl text-[#35251E] mb-6">
+          Reserve Your Corner.
+        </h3>
+
+        <form id="reservation-form" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="res-name" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+                Your Name
+              </label>
+              <input
+                type="text"
+                id="res-name"
+                required
+                placeholder="e.g. Ananya Rao"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-sm text-[#35251E] focus:outline-none focus:border-[#35251E]"
+              />
+            </div>
+            <div>
+              <label for="res-email" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="res-email"
+                required
+                placeholder="ananya@example.com"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-sm text-[#35251E] focus:outline-none focus:border-[#35251E]"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label for="res-date" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+                Date
+              </label>
+              <input
+                type="date"
+                id="res-date"
+                value="2026-11-22"
+                class="w-full px-3 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-xs text-[#35251E] focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="res-time" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+                Time
+              </label>
+              <select
+                id="res-time"
+                class="w-full px-3 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-xs text-[#35251E] focus:outline-none"
+              >
+                <option>09:00 AM</option>
+                <option selected>10:30 AM</option>
+                <option>01:00 PM</option>
+                <option>04:30 PM</option>
+                <option>07:00 PM</option>
+              </select>
+            </div>
+            <div>
+              <label for="res-guests" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+                Guests
+              </label>
+              <select
+                id="res-guests"
+                class="w-full px-3 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-xs text-[#35251E] focus:outline-none"
+              >
+                <option>1 Guest</option>
+                <option selected>2 Guests</option>
+                <option>4 Guests</option>
+                <option>6 Guests</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="res-corner" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+              Preferred Seating Corner
+            </label>
+            <select
+              id="res-corner"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-sm text-[#35251E] focus:outline-none"
+            >
+              <option>The Sunlit Atrium</option>
+              <option>The Espresso Bar</option>
+              <option>The Quiet Reading Alcove</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="res-notes" class="block text-[11px] tracking-[0.15em] uppercase text-[#6C4936] mb-1">
+              Notes or Preferences
+            </label>
+            <textarea
+              id="res-notes"
+              rows="2"
+              placeholder="Window seating, milk preference, or enquiry details..."
+              class="w-full px-3.5 py-2 rounded-xl bg-[#EDE3D5]/70 border border-[#B89B70]/40 text-sm text-[#35251E] focus:outline-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3.5 rounded-full bg-[#35251E] text-[#F7F2E9] text-xs tracking-[0.18em] uppercase font-medium hover:bg-[#4B352C] transition-colors shadow-lg cursor-pointer"
+          >
+            Submit Sample Enquiry
+          </button>
+        </form>
+      </div>
+
+      <!-- Reservation Confirmation View -->
+      <div id="reservation-success-view" class="hidden py-8 text-center space-y-5">
+        <div
+          class="w-14 h-14 rounded-full bg-[#35251E] text-[#B89B70] flex items-center justify-center mx-auto shadow-md"
+        >
+          <i data-lucide="check" class="w-6 h-6"></i>
+        </div>
+        <p class="text-[11px] tracking-[0.24em] uppercase text-[#B89B70]">
+          Sample Demo Confirmation
+        </p>
+        <h3 class="font-serif-editorial text-3xl sm:text-4xl text-[#35251E]">
+          Enquiry Preview Recorded.
+        </h3>
+        <p
+          id="reservation-summary-text"
+          class="text-sm text-[#25211E]/75 max-w-sm mx-auto leading-relaxed font-light"
+        ></p>
+        <div class="pt-3">
+          <button
+            type="button"
+            id="return-from-reservation"
+            class="px-8 py-3 rounded-full bg-[#35251E] text-[#F7F2E9] text-xs tracking-[0.18em] uppercase cursor-pointer"
+          >
+            Return to MAISON ÉLAN
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODULAR VANILLA ES6+ JAVASCRIPT ARCHITECTURE (60FPS OPTIMIZED)
+  ====================================================================== -->
+  <script>
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            document.getElementById("coffee-loader").classList.add("hide-loader");
+        }, 3500);
+    });
+
+    history.scrollRestoration = "manual";
+
+    window.addEventListener("load", () => {
+        window.scrollTo(0, 0);
+    });
+    (() => {
+      'use strict';
+
+      const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canHoverFine =
+        window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      // --- 0. NON-BLOCKING BRAND PRELOADER (Dismisses quickly < 500ms) ---
+      let preloaderDismissed = false;
+      function dismissPreloader() {
+        if (preloaderDismissed) return;
+        preloaderDismissed = true;
+        const preloader = document.getElementById('brand-preloader');
+        const bar = document.getElementById('preloader-bar');
+        if (bar) bar.style.transform = 'scaleX(1)';
+        if (preloader) {
+          preloader.style.opacity = '0';
+          preloader.style.pointerEvents = 'none';
+          const fadeMs = prefersReducedMotion ? 0 : 220;
+          setTimeout(() => {
+            if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+          }, fadeMs);
+        }
+      }
+
+      requestAnimationFrame(() => {
+        const bar = document.getElementById('preloader-bar');
+        if (bar) bar.style.transform = 'scaleX(0.9)';
+      });
+      setTimeout(dismissPreloader, prefersReducedMotion ? 50 : 320);
+      window.addEventListener('pageshow', dismissPreloader);
+
+      // --- 1. SIGNATURE MENU & ATMOSPHERE DATA ---
+      const MENU_ITEMS = [
+        {
+          id: 'signature-espresso',
+          name: 'Signature Espresso',
+          category: 'Espresso Bar',
+          price: 240,
+          shortDesc:
+            'Velvety double-shot extraction of single-estate beans with dark cacao and toasted hazelnut notes.',
+          longDesc:
+            'Pulled with measured pressure and temperature for a balanced, syrupy extraction that highlights roasted cacao, warm hazelnut, and a lingering, clean finish.',
+          tastingNotes: ['Dark Cacao', 'Toasted Hazelnut', 'Warm Spice'],
+          origin: 'Single-Estate Roast',
+          pairing: 'Butter Croissant',
+          image:
+            'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'velvet-cappuccino',
+          name: 'Velvet Cappuccino',
+          category: 'Espresso Bar',
+          price: 290,
+          shortDesc:
+            'Balanced espresso crowned with silky micro-foamed milk and a gentle touch of cocoa.',
+          longDesc:
+            'Textured milk poured over a double espresso base creates a fine, glossy micro-foam with natural sweetness and comforting structure.',
+          tastingNotes: ['Sweet Milk', 'Cocoa Dusting', 'Roasted Malt'],
+          origin: 'House Espresso Blend',
+          pairing: 'Butter Croissant',
+          image:
+            'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'caramel-cloud-latte',
+          name: 'Caramel Cloud Latte',
+          category: 'Signature Creations',
+          price: 340,
+          shortDesc:
+            'Slow-caramelized golden syrup folded into warm milk with an airy vanilla cream crown.',
+          longDesc:
+            'Amber caramel brings warmth and depth to smooth espresso and milk, finished with a light, cloud-like vanilla cream topping.',
+          tastingNotes: ['Amber Caramel', 'Vanilla Bean', 'Silky Cream'],
+          origin: 'Atelier Signature Pour',
+          pairing: 'Signature Espresso',
+          image:
+            'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'spanish-latte',
+          name: 'Spanish Latte',
+          category: 'Signature Creations',
+          price: 330,
+          shortDesc:
+            'Rich espresso blended with caramelized sweet milk for a smooth, indulgent finish.',
+          longDesc:
+            'A harmonious union of bold espresso and gently caramelized condensed milk, offering a rounded sweetness without overpowering the roast.',
+          tastingNotes: ['Caramelized Milk', 'Roasted Almond', 'Soft Vanilla'],
+          origin: 'Medium-Dark Estate Roast',
+          pairing: 'Butter Croissant',
+          image:
+            'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'belgian-chocolate-mocha',
+          name: 'Belgian Chocolate Mocha',
+          category: 'Signature Creations',
+          price: 360,
+          shortDesc:
+            'Deep dark chocolate melted with espresso and steamed milk for a rich, aromatic cup.',
+          longDesc:
+            'Real dark chocolate melts smoothly into hot espresso and steamed milk, balancing bittersweet cacao notes with a warm, velvety body.',
+          tastingNotes: ['Dark Chocolate', 'Espresso Depth', 'Warm Velvet'],
+          origin: 'Cacao & Espresso Pairing',
+          pairing: 'Velvet Cappuccino',
+          image:
+            'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          id: 'butter-croissant',
+          name: 'Butter Croissant',
+          category: 'Viennoiserie',
+          price: 260,
+          shortDesc:
+            'Flaky, golden laminated pastry baked with rich cultured butter and a tender honeycomb crumb.',
+          longDesc:
+            'Carefully laminated and baked to a crisp golden crust with delicate interior layers, cultured butter aroma, and a light, buttery finish.',
+          tastingNotes: ['Cultured Butter', 'Golden Crust', 'Tender Crumb'],
+          origin: 'Morning Pastry Bench',
+          pairing: 'Velvet Cappuccino',
+          image:
+            'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
+          fallbackImage:
+            'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+        },
+      ];
+
+      const ATMOSPHERE_CORNERS = [
+        {
+          id: 'sunlit-atrium',
+          title: 'The Sunlit Atrium',
+          description:
+            'Tall arched windows bathe hand-troweled cream stone textures and warm wooden furniture in natural sunlight, softly accented by pendant lighting and calm seating.',
+          materials: ['Cream Stone Textures', 'Warm Wooden Furniture', 'Soft Pendant Lighting'],
+          image:
+            'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80',
+        },
+        {
+          id: 'espresso-bar',
+          title: 'The Espresso Bar',
+          description:
+            'An open coffee counter framed by warm wood, pale stone, and gentle pendant glow where every espresso and milk pour is crafted at an unhurried pace.',
+          materials: ['Coffee Counter', 'Warm Timber & Stone', 'Natural Daylight'],
+          image:
+            'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=80',
+        },
+        {
+          id: 'reading-alcove',
+          title: 'The Quiet Reading Alcove',
+          description:
+            'Intimate seating arrangements set in warm wood and soft cream tones, ideal for quiet reading, thoughtful notes, or peaceful conversation away from the bustle.',
+          materials: ['Seating Arrangements', 'Cream Stone & Oak', 'Ambient Glow'],
+          image:
+            'https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1400&q=80',
+        },
+      ];
+
+      // --- 2. STICKY HEADER, rAF-THROTTLED SCROLL & MOBILE DRAWER ---
+      let currentScrollY = window.scrollY || 0;
+
+      function initNavigation() {
+        const header = document.getElementById('site-header');
+        const heroBg = document.getElementById('hero-bg-image');
+        const atmosphereBg = document.getElementById('atmosphere-bg-img');
+        const atmosphereSection = document.getElementById('atmosphere');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const mobileDrawer = document.getElementById('mobile-menu-drawer');
+        const iconOpen = document.getElementById('mobile-icon-open');
+        const iconClose = document.getElementById('mobile-icon-close');
+        let mobileOpen = false;
+        let isScrolledStyle = false;
+        let lastActiveNav = 'home';
+
+        const setMobileState = (open) => {
+          mobileOpen = open;
+          mobileToggle.setAttribute('aria-expanded', String(open));
+          if (open) {
+            mobileDrawer.classList.remove('max-h-0', 'opacity-0', 'py-0');
+            mobileDrawer.classList.add('max-h-[420px]', 'opacity-100', 'py-6');
+            iconOpen.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+          } else {
+            mobileDrawer.classList.add('max-h-0', 'opacity-0', 'py-0');
+            mobileDrawer.classList.remove('max-h-[420px]', 'opacity-100', 'py-6');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+          }
+        };
+
+        mobileToggle.addEventListener('click', () => setMobileState(!mobileOpen));
+
+        document.querySelectorAll('[data-scroll]').forEach((anchor) => {
+          anchor.addEventListener('click', (e) => {
+            const targetId = anchor.getAttribute('data-scroll');
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              if (mobileOpen) setMobileState(false);
+              targetEl.scrollIntoView({
+                behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                block: 'start',
+              });
+            }
+          });
+        });
+
+        const sectionIds = ['home', 'story', 'menu', 'experience', 'contact'];
+        let sectionMetrics = [];
+
+        const measureSections = () => {
+          sectionMetrics = sectionIds
+            .map((id) => {
+              const el = document.getElementById(id);
+              return el
+                ? { id, top: el.offsetTop, bottom: el.offsetTop + el.offsetHeight }
+                : null;
+            })
+            .filter(Boolean);
+        };
+
+        measureSections();
+        window.addEventListener('resize', measureSections, { passive: true });
+
+        let scrollTicking = false;
+        const updateOnScroll = () => {
+          scrollTicking = false;
+          currentScrollY = window.scrollY;
+
+          const shouldScrollStyle = currentScrollY > 36;
+          if (shouldScrollStyle !== isScrolledStyle) {
+            isScrolledStyle = shouldScrollStyle;
+            if (shouldScrollStyle) {
+              header.classList.add(
+                'bg-[#F7F2E9]/95',
+                'border-b',
+                'border-[#B89B70]/25',
+                'py-3.5',
+                'shadow-[0_8px_30px_-15px_rgba(53,37,30,0.12)]'
+              );
+              header.classList.remove('bg-transparent', 'py-5');
+            } else {
+              header.classList.remove(
+                'bg-[#F7F2E9]/95',
+                'border-b',
+                'border-[#B89B70]/25',
+                'py-3.5',
+                'shadow-[0_8px_30px_-15px_rgba(53,37,30,0.12)]'
+              );
+              header.classList.add('bg-transparent', 'py-5');
+            }
+          }
+
+          if (!prefersReducedMotion) {
+            if (heroBg && currentScrollY < 950) {
+              heroBg.style.transform = `translate3d(0, ${(currentScrollY * 0.12).toFixed(
+                1
+              )}px, 0) scale(1.04)`;
+            }
+
+            if (atmosphereBg && atmosphereSection) {
+              const secTop = atmosphereSection.offsetTop;
+              const secHeight = atmosphereSection.offsetHeight || 1;
+              const viewH = window.innerHeight || 800;
+              const progress = Math.max(
+                0,
+                Math.min(1, (currentScrollY + viewH - secTop) / (viewH + secHeight))
+              );
+              const offsetPx = (progress - 0.5) * 44;
+              atmosphereBg.style.transform = `translate3d(0, ${offsetPx.toFixed(
+                1
+              )}px, 0) scale(1.08)`;
+            }
+          }
+
+          const scanPos = currentScrollY + 240;
+          let activeId = 'home';
+          for (let i = 0; i < sectionMetrics.length; i++) {
+            const m = sectionMetrics[i];
+            if (scanPos >= m.top && scanPos < m.bottom) {
+              activeId = m.id;
+              break;
+            }
+          }
+
+          if (activeId !== lastActiveNav) {
+            lastActiveNav = activeId;
+            navLinks.forEach((link) => {
+              const underline = link.querySelector('.nav-underline');
+              if (!underline) return;
+              if (link.getAttribute('data-nav') === activeId) {
+                underline.classList.remove('w-0');
+                underline.classList.add('w-full');
+              } else {
+                underline.classList.remove('w-full');
+                underline.classList.add('w-0');
+              }
+            });
+          }
+        };
+
+        window.addEventListener(
+          'scroll',
+          () => {
+            if (!scrollTicking) {
+              scrollTicking = true;
+              requestAnimationFrame(updateOnScroll);
+            }
+          },
+          { passive: true }
+        );
+      }
+
+      // --- 3. SCROLL REVEAL OBSERVER ---
+      function initScrollReveals() {
+        const elements = document.querySelectorAll('.reveal-on-scroll');
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+          elements.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+      }
+
+      // --- 4. rAF-THROTTLED MAGNETIC BUTTON HOVER PHYSICS ---
+      function initMagneticButtons() {
+        if (prefersReducedMotion || !canHoverFine) return;
+
+        document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+          let cachedRect = null;
+          let rafId = null;
+          let targetX = 0;
+          let targetY = 0;
+
+          btn.addEventListener(
+            'mouseenter',
+            () => {
+              cachedRect = btn.getBoundingClientRect();
+            },
+            { passive: true }
+          );
+
+          btn.addEventListener(
+            'mousemove',
+            (e) => {
+              if (!cachedRect) cachedRect = btn.getBoundingClientRect();
+              targetX = (e.clientX - (cachedRect.left + cachedRect.width / 2)) * 0.2;
+              targetY = (e.clientY - (cachedRect.top + cachedRect.height / 2)) * 0.2;
+              if (!rafId) {
+                rafId = requestAnimationFrame(() => {
+                  rafId = null;
+                  btn.style.transition = 'transform 0.08s ease-out, background-color 0.25s ease';
+                  btn.style.transform = `translate3d(${targetX.toFixed(1)}px, ${targetY.toFixed(
+                    1
+                  )}px, 0)`;
+                });
+              }
+            },
+            { passive: true }
+          );
+
+          btn.addEventListener(
+            'mouseleave',
+            () => {
+              cachedRect = null;
+              if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+              }
+              btn.style.transition =
+                'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease';
+              btn.style.transform = 'translate3d(0px, 0px, 0)';
+            },
+            { passive: true }
+          );
+        });
+      }
+
+      // --- 5. CUSTOM DESKTOP TRAILING CURSOR (IDLE-PAUSED WHEN STATIONARY) ---
+      function initCustomCursor() {
+        if (prefersReducedMotion || !canHoverFine) return;
+        const ring = document.getElementById('cursor-ring');
+        const dot = document.getElementById('cursor-dot');
+        if (!ring || !dot) return;
+
+        let mouseX = -100;
+        let mouseY = -100;
+        let ringX = -100;
+        let ringY = -100;
+        let hovering = false;
+        let running = false;
+
+        const renderCursor = () => {
+          const dx = mouseX - ringX;
+          const dy = mouseY - ringY;
+          ringX += dx * 0.2;
+          ringY += dy * 0.2;
+
+          ring.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(
+            1
+          )}px, 0) translate(-50%, -50%) scale(${hovering ? 1.55 : 1})`;
+
+          if (Math.abs(dx) > 0.15 || Math.abs(dy) > 0.15) {
+            requestAnimationFrame(renderCursor);
+          } else {
+            running = false;
+          }
+        };
+
+        window.addEventListener(
+          'mousemove',
+          (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            if (!running) {
+              running = true;
+              requestAnimationFrame(renderCursor);
+            }
+          },
+          { passive: true }
+        );
+
+        window.addEventListener(
+          'mouseover',
+          (e) => {
+            const interactive = e.target.closest(
+              'a, button, input, select, textarea, [data-cursor="interactive"]'
+            );
+            const nextHover = Boolean(interactive);
+            if (nextHover !== hovering) {
+              hovering = nextHover;
+              ring.style.backgroundColor = hovering ? 'rgba(184, 155, 112, 0.14)' : 'transparent';
+              ring.style.borderColor = hovering ? '#35251E' : 'rgba(184, 155, 112, 0.85)';
+              if (!running) {
+                running = true;
+                requestAnimationFrame(renderCursor);
+              }
+            }
+          },
+          { passive: true }
+        );
+      }
+
+      // --- 6. SIGNATURE MENU RENDERING, rAF 3D TILT & TASTING MODAL ---
+      function initSignatureMenu() {
+        const grid = document.getElementById('menu-grid');
+        const filterButtons = document.querySelectorAll('.menu-filter-btn');
+        const tastingModal = document.getElementById('tasting-modal');
+        const closeTastingBtn = document.getElementById('close-tasting-modal');
+        const reserveOrderBtn = document.getElementById('modal-reserve-order-btn');
+        const enableTilt = !prefersReducedMotion && canHoverFine;
+
+        let activeTastingItem = null;
+
+        const openTastingModal = (item) => {
+          activeTastingItem = item;
+          const img = document.getElementById('modal-item-img');
+          img.src = item.image;
+          img.alt = item.name;
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = item.fallbackImage;
+          };
+
+          document.getElementById('modal-item-category').textContent = item.category;
+          document.getElementById('modal-item-price').textContent = `₹${item.price}`;
+          document.getElementById('modal-item-name').textContent = item.name;
+          document.getElementById('modal-item-desc').textContent = item.longDesc;
+          document.getElementById('modal-item-origin').textContent = item.origin;
+          document.getElementById('modal-item-pairing').textContent = item.pairing;
+
+          const notesWrap = document.getElementById('modal-item-notes');
+          notesWrap.innerHTML = item.tastingNotes
+            .map(
+              (n) =>
+                `<span class="px-3 py-1 rounded-full bg-[#EDE3D5] text-[#35251E] border border-[#B89B70]/30">${n}</span>`
+            )
+            .join('');
+
+          tastingModal.classList.add('open');
+        };
+
+        const closeTastingModal = () => {
+          tastingModal.classList.remove('open');
+        };
+
+        closeTastingBtn.addEventListener('click', closeTastingModal);
+        tastingModal.addEventListener('click', (e) => {
+          if (e.target === tastingModal) closeTastingModal();
+        });
+
+        reserveOrderBtn.addEventListener('click', () => {
+          const itemName = activeTastingItem ? activeTastingItem.name : '';
+          closeTastingModal();
+          const notesField = document.getElementById('res-notes');
+          if (notesField && itemName) {
+            notesField.value = `Interested in sampling the ${itemName}.`;
+          }
+          openReservationModal();
+        });
+
+        const attachTiltPhysics = (card) => {
+          if (!enableTilt) return;
+          const glare = card.querySelector('.tilt-glare');
+          let rect = null;
+          let rafId = null;
+          let lastX = 0;
+          let lastY = 0;
+
+          card.addEventListener(
+            'mouseenter',
+            () => {
+              rect = card.getBoundingClientRect();
+              card.style.willChange = 'transform';
+            },
+            { passive: true }
+          );
+
+          card.addEventListener(
+            'mousemove',
+            (e) => {
+              if (!rect) rect = card.getBoundingClientRect();
+              lastX = e.clientX - rect.left;
+              lastY = e.clientY - rect.top;
+
+              if (!rafId) {
+                rafId = requestAnimationFrame(() => {
+                  rafId = null;
+                  if (!rect) return;
+                  const rotateX = ((lastY - rect.height / 2) / (rect.height / 2)) * -4;
+                  const rotateY = ((lastX - rect.width / 2) / (rect.width / 2)) * 4;
+
+                  card.style.transition = 'transform 0.1s ease-out';
+                  card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(
+                    2
+                  )}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.012, 1.012, 1)`;
+
+                  if (glare) {
+                    glare.style.opacity = '0.24';
+                    glare.style.background = `radial-gradient(circle at ${(
+                      (lastX / rect.width) *
+                      100
+                    ).toFixed(0)}% ${((lastY / rect.height) * 100).toFixed(
+                      0
+                    )}%, rgba(255, 248, 236, 0.5), transparent 65%)`;
+                  }
+                });
+              }
+            },
+            { passive: true }
+          );
+
+          card.addEventListener(
+            'mouseleave',
+            () => {
+              rect = null;
+              if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+              }
+              card.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+              card.style.transform =
+                'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+              card.style.willChange = 'auto';
+              if (glare) glare.style.opacity = '0';
+            },
+            { passive: true }
+          );
+        };
+
+        const renderMenu = (category) => {
+          const items =
+            category === 'All'
+              ? MENU_ITEMS
+              : MENU_ITEMS.filter((item) => item.category === category);
+
+          grid.innerHTML = '';
+
+          items.forEach((item) => {
+            const card = document.createElement('article');
+            card.setAttribute('data-cursor', 'interactive');
+            card.className =
+              'tilt-card group relative overflow-hidden h-full flex flex-col rounded-[24px] bg-[#EDE3D5]/65 border border-[#B89B70]/30 shadow-[0_18px_40px_-18px_rgba(53,37,30,0.16)] hover:-translate-y-1.5 hover:shadow-[0_26px_55px_-16px_rgba(53,37,30,0.24)] transition-all duration-400 cursor-pointer';
+
+            card.innerHTML = `
+              <div class="relative h-72 overflow-hidden bg-[#EDE3D5]">
+                <img
+                  src="${item.image}"
+                  alt="${item.name}"
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.onerror=null;this.src='${item.fallbackImage}';"
+                  class="card-img-zoom w-full h-full object-cover object-center"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-[#25211E]/35 via-transparent to-transparent opacity-60"></div>
+                <span class="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-[#F7F2E9]/95 text-[10px] tracking-[0.18em] uppercase text-[#35251E] font-medium border border-[#B89B70]/30">
+                  ${item.category}
+                </span>
+                <span class="absolute bottom-4 right-4 px-4 py-1.5 rounded-full bg-[#35251E]/95 text-[#F7F2E9] text-sm tracking-wider font-medium shadow-md">
+                  ₹${item.price}
+                </span>
+              </div>
+              <div class="p-7 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] text-[#35251E] group-hover:text-[#6C4936] transition-colors mb-2.5">
+                    ${item.name}
+                  </h3>
+                  <p class="text-sm text-[#25211E]/75 leading-relaxed font-light mb-5">
+                    ${item.shortDesc}
+                  </p>
+                </div>
+                <div class="pt-4 border-t border-[#B89B70]/25 flex items-center justify-between gap-2">
+                  <div class="flex flex-wrap gap-1.5">
+                    ${item.tastingNotes
+                      .slice(0, 2)
+                      .map(
+                        (note) =>
+                          `<span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#F7F2E9] text-[#6C4936] border border-[#B89B70]/25">${note}</span>`
+                      )
+                      .join('')}
+                  </div>
+                  <span class="inline-flex items-center gap-1 text-xs tracking-[0.14em] uppercase text-[#35251E] font-medium group-hover:translate-x-1 transition-transform">
+                    Notes
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B89B70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="tilt-glare"></div>
+            `;
+
+            card.addEventListener('click', () => openTastingModal(item));
+            attachTiltPhysics(card);
+            grid.appendChild(card);
+          });
+        };
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const cat = btn.getAttribute('data-category');
+            filterButtons.forEach((b) => {
+              b.classList.remove('bg-[#35251E]', 'text-[#F7F2E9]', 'shadow-sm');
+              b.classList.add(
+                'bg-[#EDE3D5]/70',
+                'text-[#35251E]/80',
+                'hover:bg-[#EDE3D5]',
+                'border',
+                'border-[#B89B70]/25'
+              );
+            });
+            btn.classList.remove(
+              'bg-[#EDE3D5]/70',
+              'text-[#35251E]/80',
+              'hover:bg-[#EDE3D5]',
+              'border',
+              'border-[#B89B70]/25'
+            );
+            btn.classList.add('bg-[#35251E]', 'text-[#F7F2E9]', 'shadow-sm');
+            renderMenu(cat);
+          });
+        });
+
+        renderMenu('All');
+      }
+
+      // --- 7. ATMOSPHERE CORNER SWITCHER ---
+      function initAtmosphereSwitcher() {
+        const tabs = document.querySelectorAll('.corner-tab-btn');
+        const bgImg = document.getElementById('atmosphere-bg-img');
+        const cardImg = document.getElementById('corner-card-img');
+        const cardTitle = document.getElementById('corner-card-title');
+        const cardDesc = document.getElementById('corner-card-desc');
+        const materialsWrap = document.getElementById('corner-materials');
+        const bookCornerBtn = document.getElementById('book-corner-btn');
+
+        let selectedIndex = 0;
+
+        const selectCorner = (idx) => {
+          selectedIndex = idx;
+          const corner = ATMOSPHERE_CORNERS[idx];
+          if (!corner) return;
+
+          tabs.forEach((tab, i) => {
+            const compass = tab.querySelector('.corner-compass');
+            if (i === idx) {
+              tab.classList.add(
+                'bg-[#F7F2E9]/14',
+                'border-[#B89B70]',
+                'shadow-[0_18px_40px_-15px_rgba(0,0,0,0.45)]'
+              );
+              tab.classList.remove(
+                'bg-[#F7F2E9]/[0.03]',
+                'border-[#F7F2E9]/10',
+                'hover:border-[#B89B70]/45'
+              );
+              if (compass) {
+                compass.classList.add('text-[#B89B70]', 'rotate-45');
+                compass.classList.remove('text-[#F7F2E9]/40');
+              }
+            } else {
+              tab.classList.remove(
+                'bg-[#F7F2E9]/14',
+                'border-[#B89B70]',
+                'shadow-[0_18px_40px_-15px_rgba(0,0,0,0.45)]'
+              );
+              tab.classList.add(
+                'bg-[#F7F2E9]/[0.03]',
+                'border-[#F7F2E9]/10',
+                'hover:border-[#B89B70]/45'
+              );
+              if (compass) {
+                compass.classList.remove('text-[#B89B70]', 'rotate-45');
+                compass.classList.add('text-[#F7F2E9]/40');
+              }
+            }
+          });
+
+          bgImg.src = corner.image;
+          cardImg.src = corner.image;
+          cardImg.alt = corner.title;
+          cardTitle.textContent = corner.title;
+          cardDesc.textContent = corner.description;
+
+          materialsWrap.innerHTML = corner.materials
+            .map(
+              (m) =>
+                `<span class="px-3 py-1 rounded-full bg-[#25211E]/90 border border-[#B89B70]/40 text-[11px] tracking-wider text-[#EDE3D5]">${m}</span>`
+            )
+            .join('');
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            const idx = Number(tab.getAttribute('data-corner-idx'));
+            selectCorner(idx);
+          });
+        });
+
+        bookCornerBtn.addEventListener('click', () => {
+          const cornerSelect = document.getElementById('res-corner');
+          if (cornerSelect) {
+            cornerSelect.value = ATMOSPHERE_CORNERS[selectedIndex].title;
+          }
+          openReservationModal();
+        });
+      }
+
+      // --- 8. EDITABLE CONCEPT DETAILS ---
+      function initEditableDetails() {
+        const toggleBtn = document.getElementById('toggle-edit-details');
+        const label = document.getElementById('edit-details-label');
+        const editIcon = document.getElementById('edit-icon');
+        const saveIcon = document.getElementById('save-icon');
+        const instaLink = document.getElementById('display-instagram-link');
+        const footerInstaLink = document.getElementById('footer-instagram-link');
+
+        const fields = [
+          {
+            display: document.getElementById('display-address'),
+            input: document.getElementById('input-address'),
+            mirrors: [
+              document.getElementById('map-pin-address'),
+              document.getElementById('footer-address'),
+            ],
+          },
+          {
+            display: document.getElementById('display-hours'),
+            input: document.getElementById('input-hours'),
+            mirrors: [document.getElementById('footer-hours')],
+          },
+          {
+            display: document.getElementById('display-phone'),
+            input: document.getElementById('input-phone'),
+            mirrors: [document.getElementById('footer-phone')],
+          },
+          {
+            display: document.getElementById('display-instagram-text'),
+            displayWrapper: instaLink,
+            input: document.getElementById('input-instagram'),
+            mirrors: [document.getElementById('footer-instagram')],
+            onSave: (cleanHandle) => {
+              const handleSlug = cleanHandle.replace(/^@+/, '').replace(/[^a-zA-Z0-9._]/g, '');
+              const url = `https://instagram.com/${handleSlug || 'maisonelan.cafe'}`;
+              if (instaLink) instaLink.href = url;
+              if (footerInstaLink) footerInstaLink.href = url;
+            },
+          },
+        ];
+
+        let editing = false;
+
+        toggleBtn.addEventListener('click', () => {
+          editing = !editing;
+
+          if (editing) {
+            label.textContent = 'Save Sample Details';
+            editIcon.classList.add('hidden');
+            saveIcon.classList.remove('hidden');
+
+            fields.forEach((f) => {
+              (f.displayWrapper || f.display).classList.add('hidden');
+              f.input.classList.remove('hidden');
+            });
+          } else {
+            label.textContent = 'Edit Sample Details';
+            editIcon.classList.remove('hidden');
+            saveIcon.classList.add('hidden');
+
+            fields.forEach((f) => {
+              const val = f.input.value.trim() || f.display.textContent;
+              f.display.textContent = val;
+              f.mirrors.forEach((m) => {
+                if (m) m.textContent = val;
+              });
+              if (f.onSave) f.onSave(val);
+              f.input.classList.add('hidden');
+              (f.displayWrapper || f.display).classList.remove('hidden');
+            });
+          }
+        });
+      }
+
+      // --- 9. RESERVATION & ENQUIRY MODAL ---
+      const reservationModal = document.getElementById('reservation-modal');
+      const formView = document.getElementById('reservation-form-view');
+      const successView = document.getElementById('reservation-success-view');
+
+      function openReservationModal() {
+        formView.classList.remove('hidden');
+        successView.classList.add('hidden');
+        reservationModal.classList.add('open');
+      }
+
+      function closeReservationModal() {
+        reservationModal.classList.remove('open');
+      }
+
+      function initReservationModal() {
+        document.querySelectorAll('[data-open-reservation]').forEach((btn) => {
+          btn.addEventListener('click', openReservationModal);
+        });
+
+        document
+          .getElementById('close-reservation-modal')
+          .addEventListener('click', closeReservationModal);
+        document
+          .getElementById('return-from-reservation')
+          .addEventListener('click', closeReservationModal);
+
+        reservationModal.addEventListener('click', (e) => {
+          if (e.target === reservationModal) closeReservationModal();
+        });
+
+        document.getElementById('reservation-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const guests = document.getElementById('res-guests').value;
+          const corner = document.getElementById('res-corner').value;
+          const date = document.getElementById('res-date').value;
+          const time = document.getElementById('res-time').value;
+
+          document.getElementById(
+            'reservation-summary-text'
+          ).innerHTML = `Concept demo enquiry for <span class="font-medium text-[#35251E]">${guests}</span> in <span class="font-medium text-[#35251E]">${corner}</span> on ${date} at ${time} has been previewed.`;
+
+          formView.classList.add('hidden');
+          successView.classList.remove('hidden');
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            document.getElementById('tasting-modal').classList.remove('open');
+            closeReservationModal();
+          }
+        });
+      }
+
+      // --- 10. THREE.JS 3D PORCELAIN COFFEE CUP & STEAM CENTERPIECE ---
+      function initThreeCoffeeScene() {
+        const container = document.getElementById('three-cup-container');
+        const fallback = document.getElementById('three-cup-fallback');
+        if (!container) return;
+
+        const showFallback = () => {
+          container.classList.add('hidden');
+          if (fallback) fallback.classList.remove('hidden');
+        };
+
+        if (typeof THREE === 'undefined') {
+          showFallback();
+          return;
+        }
+
+        try {
+          const width = container.clientWidth || 500;
+          const height = container.clientHeight || 500;
+
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 50);
+          camera.position.set(0, 3.35, 6.2);
+          camera.lookAt(0, 0.35, 0);
+
+          const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance',
+            stencil: false,
+            depth: true,
+          });
+          renderer.setSize(width, height);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+          renderer.shadowMap.enabled = false;
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.12;
+          container.appendChild(renderer.domElement);
+
+          // Warm Side Sunlight & Ambient Fill
+          scene.add(new THREE.AmbientLight(0xfff6ea, 0.92));
+
+          const sunLight = new THREE.DirectionalLight(0xffe6c2, 1.95);
+          sunLight.position.set(4.8, 6.4, 3.8);
+          scene.add(sunLight);
+
+          const rimLight = new THREE.DirectionalLight(0xd9b88c, 0.8);
+          rimLight.position.set(-4.5, 3.0, -3.5);
+          scene.add(rimLight);
+
+          // Procedural Rosetta Latte Art Texture
+          const createLatteTexture = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            const grad = ctx.createRadialGradient(128, 128, 10, 128, 128, 128);
+            grad.addColorStop(0, '#8C583A');
+            grad.addColorStop(0.55, '#6C432B');
+            grad.addColorStop(0.88, '#4C2E1E');
+            grad.addColorStop(1, '#361F14');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 256, 256);
+
+            ctx.save();
+            ctx.translate(128, 132);
+            for (let i = 0; i < 6; i++) {
+              const scale = 1 - i * 0.12;
+              const yOff = -i * 11 + 15;
+              ctx.beginPath();
+              ctx.moveTo(0, yOff + 13 * scale);
+              ctx.bezierCurveTo(
+                -38 * scale,
+                yOff - 5 * scale,
+                -28 * scale,
+                yOff - 32 * scale,
+                0,
+                yOff - 14 * scale
+              );
+              ctx.bezierCurveTo(
+                28 * scale,
+                yOff - 32 * scale,
+                38 * scale,
+                yOff - 5 * scale,
+                0,
+                yOff + 13 * scale
+              );
+              ctx.fillStyle = `rgba(248, 241, 230, ${0.88 - i * 0.05})`;
+              ctx.fill();
+            }
+            ctx.strokeStyle = '#6C432B';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, -68);
+            ctx.lineTo(0, 48);
+            ctx.stroke();
+            ctx.restore();
+
+            return new THREE.CanvasTexture(canvas);
+          };
+
+          // Soft Baked Contact Shadow Texture
+          const createContactShadowTexture = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            const g = ctx.createRadialGradient(64, 64, 8, 64, 64, 62);
+            g.addColorStop(0, 'rgba(43, 27, 18, 0.34)');
+            g.addColorStop(0.55, 'rgba(43, 27, 18, 0.14)');
+            g.addColorStop(1, 'rgba(43, 27, 18, 0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, 128, 128);
+            return new THREE.CanvasTexture(canvas);
+          };
+
+          const porcelainMaterial = new THREE.MeshStandardMaterial({
+            color: 0xf7f1e6,
+            roughness: 0.24,
+            metalness: 0.04,
+          });
+
+          const goldRimMaterial = new THREE.MeshStandardMaterial({
+            color: 0xc5a572,
+            roughness: 0.28,
+            metalness: 0.85,
+          });
+
+          const coffeeSurfaceMaterial = new THREE.MeshStandardMaterial({
+            map: createLatteTexture(),
+            roughness: 0.2,
+            metalness: 0.05,
+          });
+
+          const heroAssembly = new THREE.Group();
+          scene.add(heroAssembly);
+
+          // Contact Shadow Plane
+          const shadowPlane = new THREE.Mesh(
+            new THREE.PlaneGeometry(5.2, 5.2),
+            new THREE.MeshBasicMaterial({
+              map: createContactShadowTexture(),
+              transparent: true,
+              depthWrite: false,
+            })
+          );
+          shadowPlane.rotation.x = -Math.PI / 2;
+          shadowPlane.position.y = -0.6;
+          heroAssembly.add(shadowPlane);
+
+          // Porcelain Saucer
+          const saucerPoints = [
+            new THREE.Vector2(0.0, -0.58),
+            new THREE.Vector2(0.85, -0.58),
+            new THREE.Vector2(1.05, -0.52),
+            new THREE.Vector2(1.92, -0.34),
+            new THREE.Vector2(1.96, -0.29),
+            new THREE.Vector2(1.88, -0.27),
+            new THREE.Vector2(1.02, -0.45),
+            new THREE.Vector2(0.75, -0.48),
+            new THREE.Vector2(0.0, -0.48),
+          ];
+          const saucerMesh = new THREE.Mesh(
+            new THREE.LatheGeometry(saucerPoints, 40),
+            porcelainMaterial
+          );
+          heroAssembly.add(saucerMesh);
+
+          const saucerGold = new THREE.Mesh(
+            new THREE.TorusGeometry(1.92, 0.012, 8, 40),
+            goldRimMaterial
+          );
+          saucerGold.rotation.x = Math.PI / 2;
+          saucerGold.position.y = -0.295;
+          heroAssembly.add(saucerGold);
+
+          // Porcelain Cup
+          const cupPoints = [
+            new THREE.Vector2(0.0, -0.46),
+            new THREE.Vector2(0.62, -0.46),
+            new THREE.Vector2(0.76, -0.35),
+            new THREE.Vector2(1.08, 0.25),
+            new THREE.Vector2(1.22, 0.92),
+            new THREE.Vector2(1.23, 1.02),
+            new THREE.Vector2(1.15, 1.02),
+            new THREE.Vector2(1.02, 0.28),
+            new THREE.Vector2(0.7, -0.32),
+            new THREE.Vector2(0.0, -0.35),
+          ];
+          const cupMesh = new THREE.Mesh(
+            new THREE.LatheGeometry(cupPoints, 40),
+            porcelainMaterial
+          );
+          heroAssembly.add(cupMesh);
+
+          const cupGold = new THREE.Mesh(
+            new THREE.TorusGeometry(1.19, 0.013, 8, 40),
+            goldRimMaterial
+          );
+          cupGold.rotation.x = Math.PI / 2;
+          cupGold.position.y = 1.02;
+          heroAssembly.add(cupGold);
+
+          // Cup Handle
+          const handleCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(1.12, 0.72, 0),
+            new THREE.Vector3(1.58, 0.74, 0),
+            new THREE.Vector3(1.66, 0.34, 0),
+            new THREE.Vector3(1.42, -0.04, 0),
+            new THREE.Vector3(0.92, -0.1, 0),
+          ]);
+          const handleMesh = new THREE.Mesh(
+            new THREE.TubeGeometry(handleCurve, 24, 0.085, 12, false),
+            porcelainMaterial
+          );
+          heroAssembly.add(handleMesh);
+
+          // Coffee & Latte Art Surface
+          const coffeeMesh = new THREE.Mesh(
+            new THREE.CircleGeometry(1.13, 40),
+            coffeeSurfaceMaterial
+          );
+          coffeeMesh.rotation.x = -Math.PI / 2;
+          coffeeMesh.rotation.z = -0.35;
+          coffeeMesh.position.y = 0.86;
+          heroAssembly.add(coffeeMesh);
+
+          // Floating Roasted Coffee Beans
+          const sharedBeanGeo = new THREE.SphereGeometry(0.14, 14, 10);
+          sharedBeanGeo.scale(1.35, 0.75, 0.95);
+          const sharedBeanMat = new THREE.MeshStandardMaterial({
+            color: 0x3b2316,
+            roughness: 0.36,
+            metalness: 0.05,
+          });
+          const sharedCreaseGeo = new THREE.TorusGeometry(0.125, 0.015, 6, 14, Math.PI);
+          const sharedCreaseMat = new THREE.MeshStandardMaterial({
+            color: 0x1e1009,
+            roughness: 0.8,
+          });
+
+          const beansData = [
+            { pos: [-2.15, 0.65, 0.55], rot: [0.5, 0.8, 0.2], speed: 1.1, phase: 0 },
+            { pos: [2.25, 0.95, -0.35], rot: [-0.4, 1.2, 0.6], speed: 0.9, phase: 1.5 },
+            { pos: [-1.85, -0.15, 1.35], rot: [0.8, 0.3, -0.5], speed: 1.25, phase: 3.1 },
+            { pos: [1.95, -0.25, 1.15], rot: [0.2, -0.9, 0.4], speed: 1.0, phase: 4.4 },
+            { pos: [0.95, 1.65, -1.2], rot: [-0.6, 0.4, 0.9], speed: 0.85, phase: 2.2 },
+          ];
+
+          const beans = beansData.map((b) => {
+            const beanGroup = new THREE.Group();
+            beanGroup.add(new THREE.Mesh(sharedBeanGeo, sharedBeanMat));
+            const crease = new THREE.Mesh(sharedCreaseGeo, sharedCreaseMat);
+            crease.rotation.x = Math.PI / 2;
+            crease.position.y = 0.085;
+            beanGroup.add(crease);
+
+            beanGroup.position.set(...b.pos);
+            beanGroup.rotation.set(...b.rot);
+            heroAssembly.add(beanGroup);
+            return { mesh: beanGroup, baseY: b.pos[1], ...b };
+          });
+
+          // Rising Organic Steam Particles
+          const createSteamTexture = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const g = ctx.createRadialGradient(32, 32, 2, 32, 32, 30);
+            g.addColorStop(0, 'rgba(255, 250, 242, 0.38)');
+            g.addColorStop(0.5, 'rgba(247, 242, 233, 0.14)');
+            g.addColorStop(1, 'rgba(247, 242, 233, 0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, 64, 64);
+            return new THREE.CanvasTexture(canvas);
+          };
+
+          const steamTex = createSteamTexture();
+          const steamParticles = [];
+          for (let i = 0; i < 12; i++) {
+            const mat = new THREE.SpriteMaterial({
+              map: steamTex,
+              transparent: true,
+              opacity: 0,
+              depthWrite: false,
+            });
+            const sprite = new THREE.Sprite(mat);
+            const progress = i / 12;
+            sprite.position.set(
+              (Math.random() - 0.5) * 0.7,
+              0.95 + progress * 1.9,
+              (Math.random() - 0.5) * 0.7
+            );
+            const s = 0.65 + progress * 0.95;
+            sprite.scale.set(s, s * 1.35, 1);
+            heroAssembly.add(sprite);
+            steamParticles.push({
+              sprite,
+              progress,
+              speed: 0.2 + Math.random() * 0.08,
+              driftX: (Math.random() - 0.5) * 0.35,
+              driftZ: (Math.random() - 0.5) * 0.35,
+              phase: Math.random() * Math.PI * 2,
+            });
+          }
+
+          const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+          let winWidth = window.innerWidth || 1200;
+
+          if (!prefersReducedMotion) {
+            window.addEventListener(
+              'pointermove',
+              (e) => {
+                mouse.targetX = (e.clientX / winWidth) * 2 - 1;
+                mouse.targetY =
+                  (e.clientY / (window.innerHeight || 800)) * 2 - 1;
+              },
+              { passive: true }
+            );
+          }
+
+          window.addEventListener(
+            'resize',
+            () => {
+              winWidth = window.innerWidth || 1200;
+              const w = container.clientWidth || 500;
+              const h = container.clientHeight || 500;
+              camera.aspect = w / h;
+              camera.updateProjectionMatrix();
+              renderer.setSize(w, h);
+            },
+            { passive: true }
+          );
+
+          let isHeroVisible = true;
+          let rafId = null;
+          const clock = new THREE.Clock();
+
+          const applyPose = (elapsed, delta) => {
+            if (prefersReducedMotion) {
+              heroAssembly.position.y = -0.12;
+              heroAssembly.rotation.y = -0.42;
+              heroAssembly.rotation.x = 0.06;
+              for (let i = 0; i < steamParticles.length; i++) {
+                steamParticles[i].sprite.material.opacity = 0;
+              }
+              return;
+            }
+
+            mouse.x += (mouse.targetX - mouse.x) * 0.08;
+            mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+            const scrollFactor = Math.min(currentScrollY / 650, 1);
+
+            heroAssembly.position.y =
+              Math.sin(elapsed * 1.1) * 0.07 - 0.12 - scrollFactor * 0.32;
+            heroAssembly.rotation.y = -0.42 + mouse.x * 0.32 + scrollFactor * 0.65;
+            heroAssembly.rotation.x = 0.06 + mouse.y * 0.14 + scrollFactor * 0.18;
+
+            for (let i = 0; i < beans.length; i++) {
+              const b = beans[i];
+              b.mesh.position.y = b.baseY + Math.sin(elapsed * b.speed + b.phase) * 0.11;
+              b.mesh.rotation.x += 0.004 * b.speed;
+              b.mesh.rotation.y += 0.006 * b.speed;
+            }
+
+            for (let i = 0; i < steamParticles.length; i++) {
+              const p = steamParticles[i];
+              p.progress += delta * p.speed;
+              if (p.progress > 1) p.progress = 0;
+
+              const y = 0.92 + p.progress * 2.05;
+              const sway = Math.sin(elapsed * 1.4 + p.phase + p.progress * 3) * 0.16;
+              p.sprite.position.set(
+                p.driftX * p.progress + sway,
+                y,
+                p.driftZ * p.progress + sway * 0.5
+              );
+
+              const scale = 0.55 + p.progress * 1.15;
+              p.sprite.scale.set(scale, scale * 1.4, 1);
+              p.sprite.material.opacity = Math.max(0, Math.sin(p.progress * Math.PI) * 0.42);
+            }
+          };
+
+          const animate = () => {
+            if (!isHeroVisible) {
+              rafId = null;
+              return;
+            }
+            if (!prefersReducedMotion) {
+              rafId = requestAnimationFrame(animate);
+            }
+
+            const elapsed = clock.getElapsedTime();
+            const delta = Math.min(clock.getDelta(), 0.05);
+            applyPose(elapsed, delta);
+            renderer.render(scene, camera);
+          };
+
+          if ('IntersectionObserver' in window) {
+            const heroObserver = new IntersectionObserver(
+              (entries) => {
+                isHeroVisible = entries[0].isIntersecting;
+                if (isHeroVisible && !rafId) {
+                  clock.getDelta();
+                  animate();
+                }
+              },
+              { threshold: 0.05 }
+            );
+            heroObserver.observe(container);
+          }
+
+          animate();
+        } catch (err) {
+          showFallback();
+        }
+      }
+
+      // --- BOOTSTRAP APPLICATION IMMEDIATELY ---
+      const boot = () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+        initNavigation();
+        initScrollReveals();
+        initMagneticButtons();
+        initCustomCursor();
+        initSignatureMenu();
+        initAtmosphereSwitcher();
+        initEditableDetails();
+        initReservationModal();
+        initThreeCoffeeScene();
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })();
+  </script>
+</body>
+</html>
