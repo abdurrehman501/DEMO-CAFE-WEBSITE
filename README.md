@@ -28,18 +28,6 @@ The concept focuses on creating a calm, welcoming, and luxurious atmosphere thro
 - Smooth scrolling and transitions
 - Modern typography and visual hierarchy
 
-## 🚀 Getting Started
-
-1. Clone the repository:
-
-   ```bash
-   git clone YOUR_REPOSITORY_URL
-   ```
-
-2. Open the project folder in VS Code.
-
-3. Open `index.html` in your browser or use the Live Server extension.
-
 ## 🎯 Project Purpose
 
 This project was developed as a demonstration of modern frontend development, creative website design, and the ability to build premium digital experiences for café and hospitality businesses.
