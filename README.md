@@ -8,7 +8,7 @@ Luxe Café is a modern café website concept designed to capture the warmth, atm
 
 Experience the website live:
 
-**[Visit Luxe Café →]((https://luxe-cafe.netlify.app))**
+** Visit Luxe Café → https://luxe-cafe.netlify.app
 
 ## ✨ Features
 
